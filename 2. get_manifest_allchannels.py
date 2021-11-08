@@ -23,6 +23,10 @@ def httpclient_logging_patch(level=logging.DEBUG):
 
 httpclient_logging_patch()
 
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, filename="get_manifest_test.log", filemode="a+",
+                        format="%(asctime)-0s %(levelname)-0s %(message)s")
+
 partnerID = "3200" 
 phoenixURL = "https://3200.frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
@@ -33,11 +37,6 @@ username = "monitoring4_rs"
 password = "#-K_monitoring4_rs" 
 header = {'Content-Type' : 'application/json', 'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
 inputfile = "opc_tlrs.csv"
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, filename="get_manifest_test.log", filemode="a+",
-                        format="%(asctime)-0s %(levelname)-0s %(message)s")
 
 def http_log(response):
     #logging.info(http.client.responses)

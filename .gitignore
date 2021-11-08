@@ -6991,3 +6991,9 @@ venv/Scripts/python.exe
 venv/Scripts/pythonw.exe
 2. get_manifest_allchannels.py
 sas_amon.xls
+opc_tlrs.csv
+make_channel_list_log.log
+opc_tlrs.csv
+get_manifest_test.log
+opc_tlrs.csv
+output.csv
