@@ -1,0 +1,14 @@
+  - metric: %3%_BRPK_XXXX_DASH
+    url: $livechannel$
+    method: GET
+    headers:
+       Accept: "*/*"
+       Accept-Encoding: "gzip, deflate, br"
+       Connection: "keep-alive"
+    status code test: 200
+    Err status code reason: %1%1
+    Err headers reason: %1%2
+    Err body reason: %1%%2%
+    debug:
+        #- "%body%"
+        #- "GET URL: $livechannel$"

@@ -1,0 +1,35 @@
+  - metric: %3%_KALT_XXXX_HLS
+    url: "$phoenixurl$/asset/action/getPlaybackContext"
+    method: post
+    headers:
+            Content-Type: "application/json"
+            Host: "3201.frp1.ott.kaltura.com"
+            Content-Length: "595"
+    data: '{
+        "assetId": %4%,
+        "assetType": "media",
+        "contextDataParams": {
+            "objectType": "KalturaPlaybackContextOptions",
+            "streamerType": "applehttp",
+            "context": "PLAYBACK",
+            "urlType": "DIRECT",
+            "mediaProtocol": "https"
+        },
+        "ks": $ks$,
+        "apiVersion": "5.4.0"
+    }'
+    status code test: 200
+    body variables:
+      - name: livechannel
+        type: text
+        filter: '"url": "([^"]*)"' 
+
+    body test:
+        type: json
+        path: result.sources[0].url
+        filter type: regex
+        filter: '"(.*)"'
+    Err body reason: %1%%2%
+    debug:
+     #- "%body%"
+     - "GET_URL: $livechannel$"

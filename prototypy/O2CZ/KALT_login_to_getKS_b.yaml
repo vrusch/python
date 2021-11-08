@@ -1,0 +1,28 @@
+  - metric: %3%_KALT_login_to_getKS
+    url: "$phoenixurl$/OTTUser/action/login"
+    method: post
+    data: '{
+        "apiVersion": "6.0.2",
+        "partnerId": "3201",
+        "username": "monitoring1_cz@cetin.cz",
+        "password": "#-K_monitoring1_cz",
+        "udid":"monitoring1_cz"
+    }'
+    status code test: 200
+    body variables:
+      - name: ks
+        type: json
+        path: result.loginSession.ks
+      - name: username
+        type: json
+        path: result.user.username
+    body test:
+      type: json
+      path: result.user.username
+      filter type: regex
+      filter: "monitoring1_cz"
+    Err body reason: %1%%2%
+    debug:
+     #- "ks: $ks$"
+     #- "%body%"
+     #- "$username$"

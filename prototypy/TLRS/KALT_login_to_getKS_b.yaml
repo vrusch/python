@@ -1,0 +1,31 @@
+  - metric: %3%_KALT_login_to_getKS
+    url: $phoenixurl$/OTTUser/action/login
+    method: post
+    headers:
+            Content-Type: "application/json"
+            Host: "3200.frp1.ott.kaltura.com"
+            Content-Length: "595"
+    data: '{
+        "apiVersion": "6.0.2",
+        "partnerId": "3200",
+        "username": "monitoring2_rs",
+        "password": "#-K_monitoring2_rs",
+        "udid": "monitoring2_rs"
+    }'
+    status code test: 200
+    body variables:
+      - name: ks
+        type: json
+        path: result.loginSession.ks
+      - name: username
+        type: json
+        path: result.user.username
+    body test:
+      type: json
+      path: result.user.username
+      filter type: regex
+      filter: "monitoring2_rs"
+    Err body reason: %1%%2%
+    debug:
+     #- "ks: $ks$"
+     #- "%body%"

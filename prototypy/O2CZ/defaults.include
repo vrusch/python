@@ -1,0 +1,8 @@
+defaults:
+  headers:
+    Content-Type: "application/x-www-form-urlencoded"
+    
+variables:
+    phoenixurl: https://3201.frp1.ott.kaltura.com/api_v3/service
+
+steps:
