@@ -22,7 +22,7 @@ elif partnerID == "3201":
     username = "monitoring1_cz@cetin.cz" 
     password = "#-K_monitoring1_cz" 
     idEqual = 354336
-    outputcsv = "opc_02cz.csv"
+    outputcsv = "opc_O2cz.csv"
 
 
 #send request function

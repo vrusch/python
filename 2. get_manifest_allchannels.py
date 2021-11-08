@@ -6,23 +6,6 @@ import csv
 import datetime
 
 
-
-httpclient_logger = logging.getLogger("http.client")
-
-def httpclient_logging_patch(level=logging.DEBUG):
-    """Enable HTTPConnection debug logging to the logging framework"""
-
-    def httpclient_log(*args):
-        httpclient_logger.log(level, " ".join(args))
-
-    # mask the print() built-in in the http.client module to use
-    # logging instead
-    http.client.print = httpclient_log
-    # enable debugging
-    http.client.HTTPConnection.debuglevel = 1
-
-httpclient_logging_patch()
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, filename="get_manifest_test.log", filemode="a+",
                         format="%(asctime)-0s %(levelname)-0s %(message)s")
@@ -38,6 +21,7 @@ password = "#-K_monitoring4_rs"
 header = {'Content-Type' : 'application/json', 'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
 inputfile = "opc_tlrs.csv"
 
+
 def http_log(response):
     #logging.info(http.client.responses)
     logging.debug(response.request.path_url)
@@ -47,6 +31,7 @@ def http_log(response):
     logging.debug(response.status_code)
     logging.debug(response.headers)
     logging.debug(response.content)
+
 
 #login ks
 servis = "OTTUser/action/login"
@@ -176,11 +161,11 @@ with open(inputfile, 'r') as csvfile:
             #print("CSV row: " + str(poc))   
             DASH_kalt_reason = False
         finally:
-            #name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+            #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
             #---------------------------------------------------------
             # zapsat do DB
             now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            sentense = channelName+","+now+",DASH,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
+            sentense = partnerID+","+channelName+","+now+",DASH,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
             f = open('output.csv', "a")
             f.write(sentense)
             f.close()
@@ -258,11 +243,11 @@ with open(inputfile, 'r') as csvfile:
             url = ""
             response = ""
 
-        #name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+        #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
         #---------------------------------------------------------
         # zapsat do DB
         now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        sentense = channelName+","+now+",DASH,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
+        sentense = partnerID+","+channelName+","+now+",DASH,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
         f = open('output.csv', "a")
         f.write(sentense)
         f.close()
@@ -348,11 +333,11 @@ with open(inputfile, 'r') as csvfile:
             #print("CSV row: " + str(poc))   
             DASH_kalt_reason = False
         finally:
-            #name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+            #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
             #---------------------------------------------------------
             # zapsat do DB
             now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            sentense = channelName+","+now+",HLS,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
+            sentense = partnerID+","+channelName+","+now+",HLS,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
             f = open('output.csv', "a")
             f.write(sentense)
             f.close()
@@ -430,11 +415,11 @@ with open(inputfile, 'r') as csvfile:
             url = ""
             response = ""
 
-        #name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+        #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
         #---------------------------------------------------------
         # zapsat do DB
         now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        sentense = channelName+","+now+",HLS,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
+        sentense = partnerID+","+channelName+","+now+",HLS,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
         f = open('output.csv', "a")
         f.write(sentense)
         f.close()
