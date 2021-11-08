@@ -161,11 +161,11 @@ with open(inputfile, 'r') as csvfile:
             #print("CSV row: " + str(poc))   
             DASH_kalt_reason = False
         finally:
-            #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+            #partnerID, channel#, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
             #---------------------------------------------------------
             # zapsat do DB
             now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            sentense = partnerID+","+channelName+","+now+",DASH,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
+            sentense = partnerID+","+channelNumber+","+channelName+","+now+",DASH,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
             f = open('output.csv', "a")
             f.write(sentense)
             f.close()
@@ -243,11 +243,11 @@ with open(inputfile, 'r') as csvfile:
             url = ""
             response = ""
 
-        #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+        #partnerID, channel#, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
         #---------------------------------------------------------
         # zapsat do DB
         now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        sentense = partnerID+","+channelName+","+now+",DASH,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
+        sentense = partnerID+","+channelNumber+","+channelName+","+now+",DASH,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
         f = open('output.csv', "a")
         f.write(sentense)
         f.close()
@@ -333,11 +333,11 @@ with open(inputfile, 'r') as csvfile:
             #print("CSV row: " + str(poc))   
             DASH_kalt_reason = False
         finally:
-            #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+            #partnerID, channel#, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
             #---------------------------------------------------------
             # zapsat do DB
             now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            sentense = partnerID+","+channelName+","+now+",HLS,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
+            sentense = partnerID+","+channelNumber+","+channelName+","+now+",HLS,KALT,"+str(elapsed)+","+str(executionTime)+","+exit_msg+","+payl+"\n"
             f = open('output.csv', "a")
             f.write(sentense)
             f.close()
@@ -415,11 +415,11 @@ with open(inputfile, 'r') as csvfile:
             url = ""
             response = ""
 
-        #partnerID, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
+        #partnerID, channel#, name, date, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
         #---------------------------------------------------------
         # zapsat do DB
         now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        sentense = partnerID+","+channelName+","+now+",HLS,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
+        sentense = partnerID+","+channelNumber+","+channelName+","+now+",HLS,BRPK,"+str(e1)+",NaN,"+exit_msg+","+payl+"\n"
         f = open('output.csv', "a")
         f.write(sentense)
         f.close()
