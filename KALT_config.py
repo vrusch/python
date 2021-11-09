@@ -142,7 +142,7 @@ def KALT_ks(apiVersion, partnerID, username, password, udid, phoenixURL, header)
         return 'ERROR'
 
 
-def get_manifest_test(assetId, login_ks, header, phoenixURL):
+def get_context(assetId, login_ks, header, phoenixURL):
     servis = "/asset/action/getPlaybackContext"
     dataDASH = {
             "assetId": assetId,
@@ -168,7 +168,7 @@ def get_manifest_test(assetId, login_ks, header, phoenixURL):
             "assetType": "media",
             "contextDataParams": {
                 "objectType": "KalturaPlaybackContextOptions",
-                "streamerType": "mpegdash",
+                "streamerType": "applehttp",
                 "context": "PLAYBACK",
                 "urlType": "DIRECT",
                 "mediaProtocol": "https"
@@ -183,5 +183,7 @@ def get_manifest_test(assetId, login_ks, header, phoenixURL):
     RelapsedHLS =  (responseDASH.elapsed.microseconds)/1000000
 
     return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS
-    
 
+def send_alarm(msg):
+    print(msg)
+    

@@ -1,31 +1,47 @@
-import mysql.connector
-import datetime
+import csv
+import time
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="atlantel",
-  database="mydatabase"
-)
+# Print iterations progress
+def progressBar(iterable, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iterable    - Required  : iterable object (Iterable)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    total = len(iterable)
+    # Progress Bar Printing Function
+    def printProgressBar (iteration):
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    # Initial Call
+    printProgressBar(0)
+    # Update Progress Bar
+    for i, item in enumerate(iterable):
+        yield item
+        printProgressBar(i + 1)
+    # Print New Line on Complete
+    print()
 
-mycursor = mydb.cursor()
-
-partnerID = "3200"
-channel_number = "654"
-channel_name = "NationalGeographic"
-date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-stage = "KALT"
-Relapsed = "0.154136"
-BEelapsed = "0.1324381"
-exit_msg = "OK: --KALT returned URL"
-payload = "https://aw-ucdn-3201-prod.tv.cetin.cz/bpk-tv/National_Geographic_SRB_2010/output3/index.m3u8?accountId=3200&deviceType=22&subscriptionType=20967&ip=86.49.29.20&primaryToken=263b564c01090e2e_be7c155c20eb988ccad55ec7e3f427a2"
 
 
-sql = "INSERT INTO channel_test (partnerID, channel_number, channel_name, date, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-val = (partnerID, channel_number, channel_name, date, stage, Relapsed, BEelapsed, exit_msg, payload)
 
-mycursor.execute(sql, val)
-
-mydb.commit()
-
-print(mycursor.rowcount, "record inserted.")
+with open('opc_tlrs.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter = ';')
+        pocet = len(list(csvreader))
+        # A List of Items
+        items = list(range(0, pocet))
+        for item in progressBar(items, prefix = 'Progress:', suffix = 'Complete', length = 50):
+          #time.sleep(0.1)
+          for row in csvreader:
+            channelNumber = row[2]
+            channelName = row[0]
+            assetId = row[1]
+          time.sleep(0.1)
