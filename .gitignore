@@ -6997,3 +6997,13 @@ opc_tlrs.csv
 get_manifest_test.log
 opc_tlrs.csv
 output.csv
+venv/Lib/site-packages/pip/_vendor/appdirs.py
+venv/Lib/site-packages/pip/_vendor/__pycache__/appdirs.cpython-39.pyc
+venv/Lib/site-packages/pip-21.2.3.dist-info/entry_points.txt
+venv/Lib/site-packages/pip-21.2.3.dist-info/INSTALLER
+venv/Lib/site-packages/pip-21.2.3.dist-info/LICENSE.txt
+venv/Lib/site-packages/pip-21.2.3.dist-info/METADATA
+venv/Lib/site-packages/pip-21.2.3.dist-info/RECORD
+venv/Lib/site-packages/pip-21.2.3.dist-info/REQUESTED
+venv/Lib/site-packages/pip-21.2.3.dist-info/top_level.txt
+venv/Lib/site-packages/pip-21.2.3.dist-info/WHEEL
