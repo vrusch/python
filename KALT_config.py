@@ -1,5 +1,6 @@
 import requests
 import json
+import csv
 
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"
@@ -7,7 +8,6 @@ language = "eng"
 
 
 def user_login(partnerID, user):
-
     if partnerID == "3200":
         if user == 1:
             udid = "monitoring1_rs" 
@@ -100,7 +100,6 @@ def user_login(partnerID, user):
 
 
 def headers(partnerID):
-
     if partnerID == "3200":
         headerPOST = {'Content-Type' : 'application/json', 'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
         headerGET = {'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
@@ -122,7 +121,6 @@ def headers(partnerID):
     return headerPOST, headerGET, phoenixURL
 
 def KALT_ks(apiVersion, partnerID, username, password, udid, phoenixURL, header):
-    
     servis = "OTTUser/action/login"
     data = {   
             "apiVersion": apiVersion,
@@ -142,5 +140,48 @@ def KALT_ks(apiVersion, partnerID, username, password, udid, phoenixURL, header)
     except:
         #doplnit telo error msg a vratit
         return 'ERROR'
+
+
+def get_manifest_test(assetId, login_ks, header, phoenixURL):
+    servis = "/asset/action/getPlaybackContext"
+    dataDASH = {
+            "assetId": assetId,
+            "assetType": "media",
+            "contextDataParams": {
+                "objectType": "KalturaPlaybackContextOptions",
+                "streamerType": "mpegdash",
+                "context": "PLAYBACK",
+                "urlType": "DIRECT",
+                "mediaProtocol": "https"
+            },
+            "ks": login_ks,
+            "clientTag": clientTag,
+            "language": language,
+            "apiVersion": apiVersion
+        }
+    sendDASH = phoenixURL + servis
+    responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
+    RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
+
+    dataHLS = {
+            "assetId": assetId,
+            "assetType": "media",
+            "contextDataParams": {
+                "objectType": "KalturaPlaybackContextOptions",
+                "streamerType": "mpegdash",
+                "context": "PLAYBACK",
+                "urlType": "DIRECT",
+                "mediaProtocol": "https"
+            },
+            "ks": login_ks,
+            "clientTag": clientTag,
+            "language": language,
+            "apiVersion": apiVersion
+        }
+    sendHLS = phoenixURL + servis
+    responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
+    RelapsedHLS =  (responseDASH.elapsed.microseconds)/1000000
+
+    return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS
     
 
