@@ -180,7 +180,7 @@ def get_context(assetId, login_ks, header, phoenixURL):
         }
     sendHLS = phoenixURL + servis
     responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
-    RelapsedHLS =  (responseDASH.elapsed.microseconds)/1000000
+    RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
 
     return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS
 
