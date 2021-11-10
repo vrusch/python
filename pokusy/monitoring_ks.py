@@ -1,5 +1,6 @@
 import requests
 import json
+import datetime
 
 
 partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
@@ -45,6 +46,11 @@ data = {
     }
 login_ks = sendRequest(servis,data)
 json_response = json.dumps(login_ks, indent=4)
-print(json_response)
-login_ks = login_ks['result']['loginSession']['ks']
+#print(json_response)
+#login_ks = login_ks['result']['loginSession']['ks']
 print(login_ks)
+#print(login_ks['result']['loginSession']['expiry'])
+
+epoch_time = (login_ks['result']['loginSession']['expiry'])
+the_datetime = datetime. datetime. fromtimestamp( epoch_time )
+print( "EXPIRATION:", the_datetime )

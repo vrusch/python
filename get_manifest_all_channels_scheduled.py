@@ -41,6 +41,8 @@ ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[
 if ks == 'ERROR':
     logger.info("No login ks returned")
 else:
+    the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
+    logger.info("[LOGIN]KS EXPIRATION: ", the_datetime )
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logger.info("[LOGIN]User KS: " + ks[0])
@@ -72,7 +74,7 @@ def func():
             KALT_executionTime = responseDASH['executionTime']
             try:
                 urlDASH = responseDASH['result']['sources'][0]['url']
-                exit_msg = "OK: --KALT returned URL"
+                exit_msg = "OK"
                 payload = urlDASH
                 logger.info("[RESULT][KALT][DASH]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                 DASH_kalt_reason = True
@@ -82,7 +84,7 @@ def func():
 
                 #send_alarm("[" + channelName+ "][" + channelNumber + "]ERROR: type: " + Etype + ", " + channelName+"][" + channelNumber + "]ERROR: message: " + Emsg)
 
-                exit_msg = "ERROR: --KALT not returned any URL"
+                exit_msg = "ERROR"
                 payload = "ERROR type: " + Etype + "; Error reason: " + Emsg
                 logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                 logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
@@ -109,7 +111,7 @@ def func():
                     Gelapsed = GETresponse.elapsed.microseconds/1000000
                     logger.info("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
 
-                    exit_msg = "OK: --BRPK returned Manifest" 
+                    exit_msg = "OK" 
                     payload = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                 else:
                     Gelapsed = GETresponse.elapsed.microseconds/1000000
@@ -120,15 +122,15 @@ def func():
                     #send_alarm("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]BRPK not get Manifest. (wrong URL?); Response status code: "+str(get_responsecode))
                     
                     exit_msg = "ERROR: --BRPK not get Manifest. (wrong URL?)"
-                    payload = payl = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
+                    payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
 
             else:
                 logger.warning("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
 
                 #send_alarm("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
 
-                exit_msg = "ERROR: --KALT not returned any URL"
-                payload = ""
+                exit_msg = "ERROR"
+                payload = "--KALT not returned any URL"
                 Gelapsed = ""
 
             #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
@@ -151,7 +153,7 @@ def func():
             KALT_executionTime = responseHLS['executionTime']
             try:
                 urlHLS = responseHLS['result']['sources'][0]['url']
-                exit_msg = "OK: --KALT returned URL"
+                exit_msg = "OK"
                 payload = urlHLS
                 logger.info("[RESULT][KALT][HLS]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                 HLS_kalt_reason = True
@@ -161,7 +163,7 @@ def func():
 
                 #send_alarm("[" + channelName+ "][" + channelNumber + "]ERROR: type: " + Etype + ", " + channelName+"][" + channelNumber + "]ERROR: message: " + Emsg)
 
-                exit_msg = "ERROR: --KALT not returned any URL"
+                exit_msg = "ERROR"
                 payload = "ERROR type: " + Etype + "; Error reason: " + Emsg
                 logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                 logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
@@ -188,7 +190,7 @@ def func():
                     Gelapsed = GETresponse.elapsed.microseconds/1000000
                     logger.info("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
 
-                    exit_msg = "OK: --BRPK returned Manifest" 
+                    exit_msg = "OK" 
                     payload = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                 else:
                     Gelapsed = GETresponse.elapsed.microseconds/1000000
@@ -198,16 +200,16 @@ def func():
 
                     #send_alarm("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]BRPK not get Manifest. (wrong URL?); Response status code: "+str(get_responsecode))
                     
-                    exit_msg = "ERROR: --BRPK not get Manifest. (wrong URL?)"
-                    payload = payl = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
+                    exit_msg = "ERROR"
+                    payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
 
             else:
                 logger.warning("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
 
                 #send_alarm("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
 
-                exit_msg = "ERROR: --KALT not returned any URL"
-                payload = ""
+                exit_msg = "ERROR"
+                payload = "--KALT not returned any URL"
                 Gelapsed = ""
 
             #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload

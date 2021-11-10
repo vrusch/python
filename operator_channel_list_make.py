@@ -3,7 +3,7 @@ import json
 import logging
 
 
-partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 phoenixURL = "https://" + partnerID + ".frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 
@@ -81,89 +81,100 @@ data = {
 all_channels = sendRequest(servis,data)
 #print (json.dumps(all_channels, indent=4))
 total_count = all_channels['result']['totalCount']
-channels = all_channels['result']['objects']
-poc = 0
-poc_n = 0
-chan_w_noNumber = []
+try:
+    channels = all_channels['result']['objects']
+    poc = 0
+    poc_n = 0
+    chan_w_noNumber = []
+except:
+    print(json.dumps(all_channels, indent=4))
+    
+    
 
 #vyloucit kanaly ktere maji v mene
 vyloucit_ch = ("Cetin", "blabla")
 vyloucit_poc = 0
 chan_out = []
 
+if total_count > 0:
 #print (json.dumps(channels, indent=4))
-for channel in channels:
-    print("=======================") 
-    channel_name = (channel['name'])
-    logging.info("")
-    logging.info("===================================================")
-    logging.info("puvodni jmeno: " +channel_name)
-    channel_name = str(channel_name)
-    channel_name = channel_name.replace(":", "")
-    channel_name = channel_name.replace(".", "")
-    channel_name = channel_name.replace("š", "s")
-    channel_name = channel_name.replace("Ž", "Z")
-    channel_name = channel_name.replace("!", "1")
-    channel_name = ''.join(channel_name.split())
-    print(channel_name)
-    logging.info("upravene jmeno: " +channel_name)
-    channel_id = (channel['id'])
-    print(channel_id)
-    logging.info("channel ID: " +str(channel_id))
-    channel_metas = channel['metas']
-    if 'ChannelNumber' in channel_metas:
-        
-        channel_number = (channel['metas']['ChannelNumber']['value'])
-        channel_number = str(channel_number)
-        logging.info("puvodni channel #: " +channel_number)
-        if len(channel_number) < 3:
-            channel_number = "0" + channel_number
-        if len(channel_number) < 3:
-            channel_number = "0" + channel_number
-        print(channel_number)
-        logging.info("upravene channel #: " +channel_number)
-        
-        channel_mediafiles = channel['mediaFiles']
-        print(len(channel_mediafiles))
-        logging.info("channel #: " +channel_number + " " + channel_name +" have "+str(len(channel_mediafiles))+" media files: ")
-        for media_file in channel_mediafiles:
-            print("--> " +media_file['type'])
-            print("-- with URL: " +media_file['url'])
-            logging.info("--> " +media_file['type'])
-            logging.info("-- with URL: " +media_file['url'])
+    for channel in channels:
+        print("=======================") 
+        channel_name = (channel['name'])
+        logging.info("")
+        logging.info("===================================================")
+        logging.info("puvodni jmeno: " +channel_name)
+        channel_name = str(channel_name)
+        channel_name = channel_name.replace(":", "")
+        channel_name = channel_name.replace(".", "")
+        channel_name = channel_name.replace("š", "s")
+        channel_name = channel_name.replace("Ž", "Z")
+        channel_name = channel_name.replace("!", "1")
+        channel_name = ''.join(channel_name.split())
+        print(channel_name)
+        logging.info("upravene jmeno: " +channel_name)
+        channel_id = (channel['id'])
+        print(channel_id)
+        logging.info("channel ID: " +str(channel_id))
+        channel_metas = channel['metas']
+        if 'ChannelNumber' in channel_metas:
+            
+            channel_number = (channel['metas']['ChannelNumber']['value'])
+            channel_number = str(channel_number)
+            logging.info("puvodni channel #: " +channel_number)
+            if len(channel_number) < 3:
+                channel_number = "0" + channel_number
+            if len(channel_number) < 3:
+                channel_number = "0" + channel_number
+            print(channel_number)
+            logging.info("upravene channel #: " +channel_number)
+            
+            channel_mediafiles = channel['mediaFiles']
+            print(len(channel_mediafiles))
+            logging.info("channel #: " +channel_number + " " + channel_name +" have "+str(len(channel_mediafiles))+" media files: ")
+            for media_file in channel_mediafiles:
+                print("--> " +media_file['type'])
+                print("-- with URL: " +media_file['url'])
+                logging.info("--> " +media_file['type'])
+                logging.info("-- with URL: " +media_file['url'])
 
-        if any(x in channel_name for x in vyloucit_ch):
-            vyloucit_poc = vyloucit_poc +1 
-            chan_out.append((channel_name,channel_number))
-            logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze je v mnozine nezadoucich")
+            if any(x in channel_name for x in vyloucit_ch):
+                vyloucit_poc = vyloucit_poc +1 
+                chan_out.append((channel_name,channel_number))
+                logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze je v mnozine nezadoucich")
+            else:
+                sentense = channel_name + ";" + str(channel_id) + ";" + str(channel_number) + "\n"
+                poc = poc + 1
+                f = open(outputcsv, "a")
+                f.write(sentense)
+                f.close()
+                logging.info("channel #: " +channel_number + " " + channel_name +" byl zapsan do csv")
         else:
-            sentense = channel_name + ";" + str(channel_id) + ";" + str(channel_number) + "\n"
-            poc = poc + 1
-            f = open(outputcsv, "a")
-            f.write(sentense)
-            f.close()
-            logging.info("channel #: " +channel_number + " " + channel_name +" byl zapsan do csv")
-    else:
-        print("NONE")
-        poc_n = poc_n + 1
-        chan_w_noNumber.append({channel_name,channel_number})
-        logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze nema cislo kanalu")
-    
+            print("NONE")
+            poc_n = poc_n + 1
+            chan_w_noNumber.append({channel_name,channel_number})
+            logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze nema cislo kanalu")
+        
 
-print("-----------------------------------------")
-print("Celkovy pocet stahnutych kanalu: "+str(total_count))
-print("Celkovy pocet zapsanych kanalu: "+str(poc))
-print("Pocet kanalu bez cisla: "+str(poc_n))
-print(chan_w_noNumber)
-print("Vyloucenych kanalu: "+str(vyloucit_poc))
-print(chan_out)
-logging.info("-----------------------------------------")
-logging.info("Celkovy pocet stahnutych kanalu: "+str(total_count))
-logging.info("Celkovy pocet zapsanych kanalu: "+str(poc))
-logging.info("Pocet kanalu bez cisla: "+str(poc_n))
-logging.info(chan_w_noNumber)
-logging.info("Vyloucenych kanalu: "+str(vyloucit_poc))
-logging.info(chan_out)
+    print("-----------------------------------------")
+    print("Celkovy pocet stahnutych kanalu: "+str(total_count))
+    print("Celkovy pocet zapsanych kanalu: "+str(poc))
+    print("Pocet kanalu bez cisla: "+str(poc_n))
+    print(chan_w_noNumber)
+    print("Vyloucenych kanalu: "+str(vyloucit_poc))
+    print(chan_out)
+    logging.info("-----------------------------------------")
+    logging.info("Celkovy pocet stahnutych kanalu: "+str(total_count))
+    logging.info("Celkovy pocet zapsanych kanalu: "+str(poc))
+    logging.info("Pocet kanalu bez cisla: "+str(poc_n))
+    logging.info(chan_w_noNumber)
+    logging.info("Vyloucenych kanalu: "+str(vyloucit_poc))
+    logging.info(chan_out)
+
+
+else:
+    print("-----------------------------------------")
+    print("Celkovy pocet stahnutych kanalu: "+str(total_count))
 
     
     
