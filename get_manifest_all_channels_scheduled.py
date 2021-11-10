@@ -42,7 +42,7 @@ if ks == 'ERROR':
     logger.info("No login ks returned")
 else:
     the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
-    logger.info("[LOGIN]KS EXPIRATION: ", the_datetime )
+    logger.info("[LOGIN]KS EXPIRATION: " + str(the_datetime))
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logger.info("[LOGIN]User KS: " + ks[0])

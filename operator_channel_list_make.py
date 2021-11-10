@@ -3,7 +3,7 @@ import json
 import logging
 
 
-partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 phoenixURL = "https://" + partnerID + ".frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 
