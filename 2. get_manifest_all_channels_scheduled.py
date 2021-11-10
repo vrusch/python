@@ -5,6 +5,7 @@ import time
 from KALT_config import *
 import logging
 import logging.handlers as handlers
+import csv
 
 
 #specificke promenne pro test
@@ -22,14 +23,14 @@ mydb = mysql.connector.connect(
 #logovani a rotovani logu
 logger = logging.getLogger('my_app')
 logger.setLevel(logging.INFO)
-logHandler = handlers.RotatingFileHandler('channel_availability_test.log', maxBytes=5242880, backupCount=5)
+logHandler = handlers.RotatingFileHandler('./log/channel_availability_test.log', maxBytes=5242880, backupCount=5)
 logHandler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 #ziskani credentials a API hlavicek, phoenixURL
-credentials = user_login(partnerID, 3)
+credentials = user_login(partnerID, 4)
 head = headers(partnerID)
 headerPOST = head[0]
 headerGET = head[1]

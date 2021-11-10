@@ -1,6 +1,5 @@
 import requests
 import json
-import csv
 
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"

@@ -33,15 +33,7 @@ def progressBar(iterable, prefix = '', suffix = '', decimals = 1, length = 100, 
 
 
 
-with open('opc_tlrs.csv', 'r') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter = ';')
-        pocet = len(list(csvreader))
-        # A List of Items
-        items = list(range(0, pocet))
-        for item in progressBar(items, prefix = 'Progress:', suffix = 'Complete', length = 50):
-          #time.sleep(0.1)
-          for row in csvreader:
-            channelNumber = row[2]
-            channelName = row[0]
-            assetId = row[1]
-          time.sleep(0.1)
+items = list(range(0, 163))
+for item in progressBar(items, prefix = 'Progress:', suffix = 'Complete', length = 50):
+    time.sleep(0.1)
+         

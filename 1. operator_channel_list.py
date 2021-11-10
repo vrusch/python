@@ -39,7 +39,7 @@ def sendRequest (servis, data):
 
 #logging
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, filename="make_channel_list_log.log", filemode="a+",
+    logging.basicConfig(level=logging.DEBUG, filename="./log/make_channel_list_log.log", filemode="a+",
                         format="%(asctime)-1s %(levelname)-0.5s %(message)s")
 logging.info("hello")
 
