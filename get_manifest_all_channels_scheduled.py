@@ -65,12 +65,13 @@ def func():
             r = get_context(assetId, ks[0], headerPOST, phoenixURL)
             responseDASH = r[0].json()
             responseHLS = r[1].json()
+            RelapsedDASH = r[2]
+            RelapsedHLS = r[3]
 
 
     #(assetId, codec, response , headerGET)
     #analyzeDASH -KALT
             logger.info("--> Start analyze DASH")
-            KALT_Relapsed = r[2]
             KALT_executionTime = responseDASH['executionTime']
             try:
                 urlDASH = responseDASH['result']['sources'][0]['url']
@@ -95,7 +96,7 @@ def func():
                 date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 mycursor = mydb.cursor()
                 sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                val = (date, partnerID, channelNumber, channelName, 'DASH', 'KALT', KALT_Relapsed, KALT_executionTime, exit_msg, payload)
+                val = (date, partnerID, channelNumber, channelName, 'DASH', 'KALT', RelapsedDASH, KALT_executionTime, exit_msg, payload)
                 #print(val)
                 mycursor.execute(sql, val)
                 mydb.commit()
@@ -149,7 +150,6 @@ def func():
     #(assetId, codec, response , headerGET)
     #analyzeHLS: -KALT
             logger.info("--> Start analyze HLS")
-            KALT_Relapsed = r[2]
             KALT_executionTime = responseHLS['executionTime']
             try:
                 urlHLS = responseHLS['result']['sources'][0]['url']
@@ -174,7 +174,7 @@ def func():
                 date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 mycursor = mydb.cursor()
                 sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                val = (date, partnerID, channelNumber, channelName, 'HLS', 'KALT', KALT_Relapsed, KALT_executionTime, exit_msg, payload)
+                val = (date, partnerID, channelNumber, channelName, 'HLS', 'KALT', RelapsedHLS, KALT_executionTime, exit_msg, payload)
                 #print(val)
                 mycursor.execute(sql, val)
                 mydb.commit()
