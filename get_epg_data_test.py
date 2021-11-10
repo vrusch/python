@@ -8,7 +8,7 @@ import http.client
 
 logger = logging.getLogger('my_app')
 logger.setLevel(logging.DEBUG)
-logHandler = handlers.RotatingFileHandler('EPG.log', maxBytes=50500500, backupCount=4)
+logHandler = handlers.RotatingFileHandler('./log/epg_date_test.log', maxBytes=50500500, backupCount=4)
 logHandler.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
