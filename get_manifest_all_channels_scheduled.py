@@ -30,7 +30,7 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 #ziskani credentials a API hlavicek, phoenixURL
-credentials = user_login(partnerID, 4)
+credentials = user_login(partnerID, 3)
 head = headers(partnerID)
 headerPOST = head[0]
 headerGET = head[1]
@@ -121,7 +121,7 @@ def func():
 
                     #send_alarm("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]BRPK not get Manifest. (wrong URL?); Response status code: "+str(get_responsecode))
                     
-                    exit_msg = "ERROR: --BRPK not get Manifest. (wrong URL?)"
+                    exit_msg = "ERROR"
                     payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
 
             else:
