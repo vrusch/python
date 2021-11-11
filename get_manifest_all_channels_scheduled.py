@@ -30,7 +30,7 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 #ziskani credentials a API hlavicek, phoenixURL
-credentials = user_login(partnerID, 3)
+credentials = user_login(partnerID, 4)
 head = headers(partnerID)
 headerPOST = head[0]
 headerGET = head[1]
@@ -52,7 +52,7 @@ def func():
     logger.info("=============================================================================================")
     logger.info("======= NEXT ROUND START: " + date + " ===============================================")
     logger.info("=============================================================================================")
-    print("ROUND START: " + date)
+    #print("ROUND START: " + date)
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
         csvreader = csv.reader(csvfile, delimiter = ';')
@@ -225,7 +225,7 @@ def func():
 
 now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 logger.info ("  ====>> JOB START RUN AT: "+ now)
-print("  ====>> JOB START RUN AT: "+ now)
+#print("  ====>> JOB START RUN AT: "+ now)
 schedule.every(5).minutes.do(func)
   
 while True:

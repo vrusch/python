@@ -11,7 +11,7 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-channel_name = 'Superstar2'
+channel_name = 'PINKFamily'
 sql = "SELECT codec, stage, Relapsed, BEelapsed, date FROM channel_test WHERE channel_name = '"+channel_name+"'"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
@@ -51,14 +51,14 @@ df = pd.DataFrame(data)
 print(df.info()) 
 print(df)
 
-#'''
+'''
 df.plot(marker = '.')
 plt.xlabel("Progress in time")
 plt.ylabel("Elapsed time (ms)")
 plt.title("Channel: " + channel_name)
 plt.grid(linestyle = 'dashed', linewidth = 0.5)
 plt.show()
-#'''
+'''
 
 
 
