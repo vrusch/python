@@ -48,11 +48,11 @@ else:
     logger.info("[LOGIN]User KS: " + ks[0])
 
 def func():
-    date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logger.info("=============================================================================================")
-    logger.info("======= NEXT ROUND START: " + date + " ===============================================")
+    logger.info("======= NEXT ROUND START: " + dateX + " ===============================================")
     logger.info("=============================================================================================")
-    #print("ROUND START: " + date)
+    #print("ROUND START: " + dateX)
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
         csvreader = csv.reader(csvfile, delimiter = ';')
@@ -67,6 +67,7 @@ def func():
             responseHLS = r[1].json()
             RelapsedDASH = r[2]
             RelapsedHLS = r[3]
+            RQdate = r[4]
 
 
     #(assetId, codec, response , headerGET)
@@ -93,10 +94,9 @@ def func():
                 DASH_kalt_reason = False
             finally:
                 #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
-                date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 mycursor = mydb.cursor()
                 sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                val = (date, partnerID, channelNumber, channelName, 'DASH', 'KALT', RelapsedDASH, KALT_executionTime, exit_msg, payload)
+                val = (RQdate, partnerID, channelNumber, channelName, 'DASH', 'KALT', RelapsedDASH, KALT_executionTime, exit_msg, payload)
                 #print(val)
                 mycursor.execute(sql, val)
                 mydb.commit()
@@ -135,10 +135,9 @@ def func():
                 Gelapsed = ""
 
             #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
-            date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             mycursor = mydb.cursor()
             sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            val = (date, partnerID, channelNumber, channelName, 'DASH', 'BRPK', Gelapsed, '', exit_msg, payload)
+            val = (RQdate, partnerID, channelNumber, channelName, 'DASH', 'BRPK', Gelapsed, '', exit_msg, payload)
             #print(val)
             mycursor.execute(sql, val)
             mydb.commit()
@@ -171,10 +170,9 @@ def func():
                 HLS_kalt_reason = False
             finally:
                 #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
-                date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 mycursor = mydb.cursor()
                 sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                val = (date, partnerID, channelNumber, channelName, 'HLS', 'KALT', RelapsedHLS, KALT_executionTime, exit_msg, payload)
+                val = (RQdate, partnerID, channelNumber, channelName, 'HLS', 'KALT', RelapsedHLS, KALT_executionTime, exit_msg, payload)
                 #print(val)
                 mycursor.execute(sql, val)
                 mydb.commit()
@@ -213,18 +211,18 @@ def func():
                 Gelapsed = ""
 
             #date, partnerID, channel#, name, codec, stage ,Relapsed, BEelapsed, exit_msg, payload
-            date =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             mycursor = mydb.cursor()
             sql = "INSERT INTO channel_test (date, partnerID, channel_number, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg, payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            val = (date, partnerID, channelNumber, channelName, 'HLS', 'BRPK', Gelapsed, '', exit_msg, payload)
+            val = (RQdate, partnerID, channelNumber, channelName, 'HLS', 'BRPK', Gelapsed, '', exit_msg, payload)
             mycursor.execute(sql, val)
             mydb.commit()
             lastID = mycursor.lastrowid
             logger.info("1 record inserted, ID:" + str(lastID))
+            RQdate = ""
 
 
-now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-logger.info ("  ====>> JOB START RUN AT: "+ now)
+#now =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#logger.info ("  ====>> JOB START RUN AT: "+ now)
 #print("  ====>> JOB START RUN AT: "+ now)
 schedule.every(5).minutes.do(func)
   

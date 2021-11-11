@@ -23,10 +23,13 @@ HLSKALT = []
 HLSBRPK = []
 DASHKALTBE = []
 HLSKALTBE = []
+Ypoint_date = []
 
 for x in myresult:
-  print(x)
+  #print(x)
+  
   if 'DASH' in x and 'KALT' in x:
+    Ypoint_date.append(x[4])
     DASHKALT.append(float(x[2]))
     DASHKALTBE.append(float(x[3]))
   elif 'DASH' in x and 'BRPK' in x:
@@ -46,19 +49,21 @@ data['HLS KALT'] = HLSKALT
 data['HLS BRPK'] = HLSBRPK
 data['DASH KALT BE'] = DASHKALTBE
 data['HLS KALT BE'] = HLSKALTBE
+data['DATE'] = Ypoint_date
 
-df = pd.DataFrame(data)
-print(df.info()) 
-print(df)
+dx = pd.DataFrame(data)
+#print(dx.info()) 
+print(dx)
 
-'''
-df.plot(marker = '.')
+
+dx.plot(marker = '.')
+#plt.plot(x = 'DASH KALT', y = 'DATE')
 plt.xlabel("Progress in time")
 plt.ylabel("Elapsed time (ms)")
 plt.title("Channel: " + channel_name)
 plt.grid(linestyle = 'dashed', linewidth = 0.5)
 plt.show()
-'''
+
 
 
 

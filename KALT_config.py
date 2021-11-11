@@ -1,5 +1,7 @@
 import requests
 import json
+import datetime
+import time
 
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"
@@ -160,7 +162,13 @@ def get_context(assetId, login_ks, header, phoenixURL):
             "apiVersion": apiVersion
         }
     sendDASH = phoenixURL + servis
-    responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
+    try:
+        dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
+    except:
+        time.sleep(1)
+        dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
     RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
 
     dataHLS = {
@@ -179,10 +187,14 @@ def get_context(assetId, login_ks, header, phoenixURL):
             "apiVersion": apiVersion
         }
     sendHLS = phoenixURL + servis
-    responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
+    try:
+        responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
+    except:
+        time.sleep(1)
+        responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
     RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
 
-    return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS
+    return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS, dateS
 
 def send_alarm(msg):
     print(msg)
