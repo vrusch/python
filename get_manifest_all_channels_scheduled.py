@@ -50,7 +50,7 @@ else:
 def func():
     dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logger.info("=============================================================================================")
-    logger.info("======= NEXT ROUND START: " + dateX + " ===============================================")
+    logger.info("======= THIST ROUND START: " + dateX + " ===============================================")
     logger.info("=============================================================================================")
     #print("ROUND START: " + dateX)
     #otevrit csv a vrati stream

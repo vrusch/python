@@ -4,7 +4,6 @@ import logging
 import datetime
 import csv
 import logging.handlers as handlers
-import http.client
 
 logger = logging.getLogger('my_app')
 logger.setLevel(logging.DEBUG)

@@ -2,7 +2,6 @@ import requests
 import json
 import logging
 import http.client
-import csv
 
 httpclient_logger = logging.getLogger("http.client")
 
@@ -24,9 +23,9 @@ phoenixURL = "https://3200.frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"
 language = "eng"
-udid = "monitoring4_rs" 
-username = "monitoring4_rs" 
-password = "#-K_monitoring4_rs" 
+udid = "monitoring3_rs" 
+username = "monitoring3_rs" 
+password = "#-K_monitoring3_rs" 
 header = {'Content-Type' : 'application/json', 'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
 
 httpclient_logging_patch()
@@ -55,6 +54,7 @@ login_ks = json_response['result']['loginSession']['ks']
 #print(login_ks)
 
 #getEPG data for one program
+'''
 servis = "/asset/action/list"
 data = {
     "language": language,
@@ -84,6 +84,7 @@ totalCount = json_response['result']['totalCount']
 print("---------------------------")
 print(executionTime)
 print(totalCount)
+'''
 
 #get HOME PAGE content
 servis = "/asset/action/list"
@@ -109,8 +110,9 @@ response = requests.post(send, json.dumps(data), headers=header)
 #print(response.request.headers)
 #print(response.request.body)
 json_response = response.json()
-executionTime = json_response['executionTime']
+#executionTime = json_response['executionTime']
 totalCount = json_response['result']['totalCount']
 print("---------------------------")
-print(executionTime)
+#print(executionTime)
 print(totalCount)
+print(response.content)
