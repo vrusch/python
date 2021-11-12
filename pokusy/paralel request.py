@@ -8,11 +8,11 @@ form_data = {
     "foo1":"bar1",
     "foo2":"bar2"
 }
-list_of_urls = [("https://postman-echo.com/post",form_data)]*10
+list_of_req = [("https://postman-echo.com/post",form_data)]*50
 
 
-with ThreadPoolExecutor(max_workers=10) as pool:
-    response_list = list(pool.map(post_url,list_of_urls))
+with ThreadPoolExecutor(max_workers=50) as pool:
+    response_list = list(pool.map(post_url,list_of_req))
 
 
 for response in response_list:
