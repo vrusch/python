@@ -3,8 +3,7 @@ import os
 import shutil
 import subprocess
 import logging
-import calendar
-import time
+import datetime
 
 
 inputfile = "C:\Temp\work\python\opc_tlrs.csv"
@@ -20,25 +19,17 @@ proto_dir_a = os.path.join(proto_dir, operator)
 rows = []
 
 # create project directory
-patho = os.path.join(parent_dir, output_dir)
-
-if os.path.exists(patho) == True:
-    ts = str(calendar.timegm(time.gmtime()))
-    output_dir = "TLRS-channels" + ts
-    path = os.path.join(parent_dir, output_dir)
-    os.mkdir(path)
-else:
-    os.mkdir(patho)
-    path = patho
-
+ts = datetime.datetime.now().strftime("%Y.%m.%d_%H%M%S")
+output_dir = "TLRS-channels-" + ts
+path = os.path.join(parent_dir, output_dir)
+os.mkdir(path)
 
 #logging
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, filename=os.path.join(path, "makelog.log"), filemode="a+",
                         format="%(asctime)-1s %(levelname)-0.5s %(message)s")
-logging.info("hello")
-if path != patho:
-    logging.info("Directory " + patho + " already exist, renamed to: TLRS-channels" + ts)
+
+logging.info("LOGGER say hello")
 
 logging.info("inputfile = " + inputfile)
 logging.info("output_dir = " + output_dir)
@@ -48,11 +39,14 @@ logging.info("proto_dir = " + proto_dir)
 logging.info("scr_num = " + str(scr_num))
 logging.info("Dir --> " + path + "  was created")
 
+#copy pre-requisites
 shutil.copy(os.path.join(proto_dir, "all.bat"), os.path.join(path, "all.bat"))
 logging.info("file --> " + os.path.join(path, "all.bat") + "  was copied")
 shutil.copy(os.path.join(proto_dir, "amonscript.exe"), os.path.join(path, "amonscript.exe"))
 logging.info("file --> " + os.path.join(path, "amonscript.exe") + "  was copied")
-
+shutil.copy(inputfile, os.path.join(path, "source_opc_channel_lineup.csv"))
+logging.info("file --> " + inputfile + "  was copied")
+#inputfile
 
 # append to all.bat sentence with path
 all_b_sentense = "set PATH="+path+"\n\n"
@@ -250,8 +244,3 @@ for line in fread:
             logging.info(line)
 print("Found "+ str(ch) + " errors")
 logging.info("Found "+ str(ch) + " errors")
-
-
-
-
-

@@ -3,3 +3,4 @@ log/*
 *.csv
 __venv__/*
 test.log
+opc_tlrs.csv

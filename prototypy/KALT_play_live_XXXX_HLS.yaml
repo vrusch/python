@@ -23,13 +23,15 @@
       - name: livechannel
         type: text
         filter: '"url": "([^"]*)"' 
-
     body test:
         type: json
         path: result.sources[0].url
         filter type: regex
         filter: '"(.*)"'
+    additional values:
+        - name: "URL"
+          value: "0"
+          unit: "$livechannel$"
     Err body reason: %1%%2%
     debug:
      #- "%body%"
-     - "GET_URL: $livechannel$"
