@@ -65,6 +65,15 @@ plt.title("Channel: " + channel_name)
 plt.grid(linestyle = 'dashed', linewidth = 0.5)
 plt.show()
 
+'''
+fig = px.line(
+    dx,
+    x="DATE",
+    y=("DASH KALT"), 
+    title="blabla",
+)
+fig.show()
+'''
 
 
 
