@@ -15,7 +15,7 @@ channel_name = 'PINKFamily'
 sql = "SELECT codec, stage, Relapsed, BEelapsed, date FROM channel_test WHERE channel_name = '"+channel_name+"'"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
-print(len(myresult))
+#print(len(myresult))
 
 DASHKALT = []
 DASHBRPK = []
@@ -43,20 +43,21 @@ for x in myresult:
     print('trow')
 
 data = {}
+data['DATE'] = Ypoint_date
 data['DASH KALT'] = DASHKALT
 data['DASH BRPK'] = DASHBRPK
 data['HLS KALT'] = HLSKALT
 data['HLS BRPK'] = HLSBRPK
 data['DASH KALT BE'] = DASHKALTBE
 data['HLS KALT BE'] = HLSKALTBE
-data['DATE'] = Ypoint_date
+
 
 dx = pd.DataFrame(data)
 #print(dx.info()) 
 print(dx)
 
 
-dx.plot(marker = '.')
+dx.plot(x= "DATE",marker = '.')
 #plt.plot(x = 'DASH KALT', y = 'DATE')
 plt.xlabel("Progress in time")
 plt.ylabel("Elapsed time (ms)")
