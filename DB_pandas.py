@@ -14,49 +14,30 @@ mycursor = mydb.cursor()
 
 channel_name = 'PINKFamily'
 
-sql = "SELECT codec, stage, Relapsed, BEelapsed, date FROM channel_test WHERE channel_name = '"+channel_name+"'"
+sql = "SELECT channel_name, stage, codec, Relapsed, BEelapsed, date FROM channel_test"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
 
-DASHKALT = []
-DASHBRPK = []
-HLSKALT = []
-HLSBRPK = []
-DASHKALTBE = []
-HLSKALTBE = []
-Ypoint_date = []
+data = {}
+
 
 for x in myresult:
-  
-  if 'DASH' in x and 'KALT' in x:
-    Ypoint_date.append(x[4])
-    DASHKALT.append(float(x[2]))
-    DASHKALTBE.append(float(x[3]))
-  elif 'DASH' in x and 'BRPK' in x:
-    DASHBRPK.append(float(x[2]))
-  elif 'HLS' in x and 'KALT' in x:
-    HLSKALT.append(float(x[2]))
-    HLSKALTBE.append(float(x[3]))
-  elif 'HLS' in x and 'BRPK' in x:
-    HLSBRPK.append(float(x[2]))
+  if x[0] in data:
+    if 'DASH' in x:
+      data[str(x[0])]['DASH'] = x[3]
+    if 'HLS' in x:
+      data[str(x[0])]['HLS'] = x[3]
   else:
-    print('trow')
+    data[str(x[0])] = []
+    data[str(x[0])]['DASH'] = {}
+    data[str(x[0])]['HLS'] = {}
+    if 'DASH' in x:
+      data[str(x[0])]['DASH'] = x[3]
+    if 'HLS' in x:
+      data[str(x[0])]['HLS'] = x[3]
+    
 
-data = {}
-data['DATE'] = Ypoint_date
-data['DASH KALT'] = DASHKALT
-data['DASH BRPK'] = DASHBRPK
-data['HLS KALT'] = HLSKALT
-data['HLS BRPK'] = HLSBRPK
-data['DASH KALT BE'] = DASHKALTBE
-data['HLS KALT BE'] = HLSKALTBE
-
-dx = px.data.gapminder()
-dx = pd.DataFrame(data)
-
-
-fig = px.line(dx,x="DATE",y=['DATE', 'DASH KALT', 'DASH BRPK', 'HLS KALT', 'HLS BRPK', 'DASH KALT BE', 'HLS KALT BE'], title="blabla",)
-fig.show()
+print(data)
 
 
 

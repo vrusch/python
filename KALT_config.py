@@ -164,7 +164,7 @@ def get_context(assetId, login_ks, header, phoenixURL):
     sendDASH = phoenixURL + servis
     try:
         dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
+        responseDASH = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=header)
     except:
         time.sleep(1)
         dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -188,7 +188,7 @@ def get_context(assetId, login_ks, header, phoenixURL):
         }
     sendHLS = phoenixURL + servis
     try:
-        responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
+        responseHLS = requests.post(sendHLS, json.dumps(dataHLS), timeout= 2, headers=header)
     except:
         time.sleep(1)
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
