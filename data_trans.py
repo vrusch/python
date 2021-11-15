@@ -27,7 +27,6 @@ for x in myresult:
     dt[str(x[1])][x[0]] = {}
 
 
-
 #dx = pd.DataFrame(data)
 print(dt)
 
