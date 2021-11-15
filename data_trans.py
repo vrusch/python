@@ -18,17 +18,20 @@ sql = "SELECT date, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg FR
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
 
-#data = []
+data = []
 dt = {}
 
+
 for x in myresult:
-    #data.append(dict(channel = str([x[1]]), date = x[0], codec =[x[2]], stage = [x[3]], Relapsed =[x[4]], exit_msg =[x[5]]))
-    dt[str(x[1])] = {}
-    dt[str(x[1])][x[0]] = {}
+  #print(x)
+  #data.append(dict(channel = str([x[1]]), date = x[0], codec =[x[2]], stage = [x[3]], Relapsed =[x[4]], exit_msg =[x[5]]))
+  dt[str(x[1])] = {}
+  dt[str(x[1])][x[0]] = {}
+  #dt.append(x)
 
-
-#dx = pd.DataFrame(data)
 print(dt)
+dx = pd.DataFrame(dt)
+#print(dx)
 
 #dictionary = {}
 #dictionary["channel"] = {}
@@ -37,5 +40,5 @@ print(dt)
 #dictionary["channel"]["HLS"] = [{"KALT": 'true'}]
 #dictionary["channel"]["HLS"] = [{"BRPK": 'true'}]
 
-#fig = px.line(dx, x="date", y='Relapsed')
+#fig = px.line(dx, x=0, y=4)
 #fig.show()
