@@ -74,9 +74,10 @@ buttons = html.Div(
     ],
 )
 
-heading = html.H1("Dash Bootstrap Template Demo", className="bg-primary text-white p-2")
+#heading = html.H1("Dash Bootstrap Template Demo", className="bg-primary text-white p-2")
 
-app.layout = dbc.Container(fluid=True, children=[heading, buttons, graphs])
+#app.layout = dbc.Container(fluid=True, children=[heading, buttons, graphs])
+app.layout = dbc.Container(fluid=True, children=[buttons, graphs])
 
 
 if __name__ == "__main__":
