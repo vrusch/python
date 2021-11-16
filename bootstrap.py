@@ -59,25 +59,7 @@ graphs = html.Div(
     ]
 )
 
-# These buttons are added to the app just to show the Boostrap theme colors
-buttons = html.Div(
-    [
-        dbc.Button("Primary", color="primary", className="mr-1"),
-        dbc.Button("Secondary", color="secondary", className="mr-1"),
-        dbc.Button("Success", color="success", className="mr-1"),
-        dbc.Button("Warning", color="warning", className="mr-1"),
-        dbc.Button("Danger", color="danger", className="mr-1"),
-        dbc.Button("Info", color="info", className="mr-1"),
-        dbc.Button("Light", color="light", className="mr-1"),
-        dbc.Button("Dark", color="dark", className="mr-1"),
-        dbc.Button("Link", color="link"),
-    ],
-)
-
-#heading = html.H1("Dash Bootstrap Template Demo", className="bg-primary text-white p-2")
-
-#app.layout = dbc.Container(fluid=True, children=[heading, buttons, graphs])
-app.layout = dbc.Container(fluid=True, children=[buttons, graphs])
+app.layout = dbc.Container(fluid=True, children=[graphs])
 
 
 if __name__ == "__main__":

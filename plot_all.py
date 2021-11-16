@@ -17,17 +17,37 @@ mycursor.execute(sql)
 myresult = mycursor.fetchall()
 print(len(myresult))
 
-dt = {}
-poc = 0
+date = []
+channel_name = []
+codec = []
+stage = []
+Relapsed = []
+BEelapsed = []
+exit_msg = []
+
 
 for x in myresult:
-    poc = poc + 1
-    #print(x)
-    dt[poc] = {'channel' : x[1], 'date' : x[0], 'codec' : x[2], 'stage' : x[3], 'Relapsed' : x[4], 'BEelapsed' : x[5]} 
+  date.append(x[0])
+  channel_name.append(x[1])
+  codec.append(x[2])
+  stage.append(x[3])
+  Relapsed.append(x[4])
+  BEelapsed.append(x[5])
+  exit_msg.append(x[6])
+  
+  data = {}
+  data['date'] = date
+  data['channel'] = channel_name
+  data['codec'] = codec
+  data['stage'] = stage
+  data['Relapsed'] = Relapsed
+  data['BEelapsed'] = BEelapsed
+  data['exit_msg'] = exit_msg
 
-
-dx = pd.DataFrame(dt)
+#print(data)
+dx = pd.DataFrame(data)
+#print(dx.info()) 
 print(dx)
 
-#fig = px.line(dx, x='date')
-#fig.show()
+fig = px.line(dx, x='date', y='Relapsed')
+fig.show()

@@ -19,38 +19,38 @@ mycursor.execute(sql)
 myresult = mycursor.fetchall()
 print(len(myresult))
 
-DASHKALT = []
-DASHBRPK = []
-HLSKALT = []
-HLSBRPK = []
-DASHKALTBE = []
-HLSKALTBE = []
-Ypoint_date = []
+dash_kalt = []
+dash_brpk = []
+hls_kalt = []
+hls_brpk = []
+dash_kalt_be = []
+hls_kalt_be = []
+dates = []
 
 for x in myresult:
   #print(x)
   if 'DASH' in x and 'KALT' in x:
-    Ypoint_date.append(x[4])
-    DASHKALT.append(float(x[2]))
-    DASHKALTBE.append(float(x[3]))
+    dates.append(x[4])
+    dash_kalt.append(float(x[2]))
+    dash_kalt_be.append(float(x[3]))
   elif 'DASH' in x and 'BRPK' in x:
-    DASHBRPK.append(float(x[2]))
+    dash_brpk.append(float(x[2]))
   elif 'HLS' in x and 'KALT' in x:
-    HLSKALT.append(float(x[2]))
-    HLSKALTBE.append(float(x[3]))
+    hls_kalt.append(float(x[2]))
+    hls_kalt_be.append(float(x[3]))
   elif 'HLS' in x and 'BRPK' in x:
-    HLSBRPK.append(float(x[2]))
+    hls_brpk.append(float(x[2]))
   else:
     print('trow')
 
 data = {}
-data['DATE'] = Ypoint_date
-data['DASH KALT'] = DASHKALT
-data['DASH BRPK'] = DASHBRPK
-data['HLS KALT'] = HLSKALT
-data['HLS BRPK'] = HLSBRPK
-data['DASH KALT BE'] = DASHKALTBE
-data['HLS KALT BE'] = HLSKALTBE
+data['DATE'] = dates
+data['DASH KALT'] = dash_kalt
+data['DASH BRPK'] = dash_brpk
+data['HLS KALT'] = hls_kalt
+data['HLS BRPK'] = hls_brpk
+data['DASH KALT BE'] = dash_kalt_be
+data['HLS KALT BE'] = hls_kalt_be
 
 dx = pd.DataFrame(data)
 #print(dx.info()) 
