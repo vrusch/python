@@ -15,6 +15,7 @@ mycursor = mydb.cursor()
 sql = "SELECT date, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg FROM channel_test"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
+print(len(myresult))
 
 dt = {}
 poc = 0
@@ -28,5 +29,5 @@ for x in myresult:
 dx = pd.DataFrame(dt)
 print(dx)
 
-#fig = px.line(dx, x=0, y=4)
+#fig = px.line(dx, x='date')
 #fig.show()
