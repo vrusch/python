@@ -1,6 +1,7 @@
 
 import mysql.connector
 import pandas as pd
+from pandas.core import indexing
 import plotly.express as px
 
 #DB connect
@@ -31,8 +32,14 @@ for x in myresult:
   channel_name.append(x[1])
   codec.append(x[2])
   stage.append(x[3])
-  Relapsed.append(x[4])
-  BEelapsed.append(x[5])
+  if x[4] == '':
+    Relapsed.append(x[4])
+  else:
+    Relapsed.append(float(x[4]))
+  if x[5] == '':
+    BEelapsed.append(x[5])
+  else:
+    BEelapsed.append(float(x[5]))
   exit_msg.append(x[6])
   
   data = {}
@@ -44,10 +51,19 @@ for x in myresult:
   data['BEelapsed'] = BEelapsed
   data['exit_msg'] = exit_msg
 
-#print(data)
+
 dx = pd.DataFrame(data)
 #print(dx.info()) 
-print(dx)
+#print(dx)
+#dff = dx[(dx.channel == 'RTS1HD') & (dx.codec == 'DASH') & (dx.stage == 'KALT')]
+#print(dff)
+#dff = dff.sort_values(by="date")
 
-fig = px.line(dx, x='date', y='Relapsed')
+dxa = dx.query("channel in ['RTS1HD'] and codec in ['DASH'] and stage in ['KALT']")
+dxb = dx.query("channel in ['RTS1HD'] and codec in ['DASH'] and stage in ['BRPK']")
+print(dxb)
+
+
+fig = px.line(dxb, x='date', y='Relapsed', markers=True, text="Relapsed", symbol="stage")
+fig = px.line(dxa, x='date', y='Relapsed', markers=True, text="Relapsed", symbol="stage")
 fig.show()
