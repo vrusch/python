@@ -12,26 +12,24 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-channel_name = 'PINKFamily'
-
 sql = "SELECT date, channel_name, codec, stage, Relapsed, BEelapsed, exit_msg FROM channel_test"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
 
-data = []
 dt = {}
-
+poc = 0
 
 for x in myresult:
-  #print(x)
-  #data.append(dict(channel = str([x[1]]), date = x[0], codec =[x[2]], stage = [x[3]], Relapsed =[x[4]], exit_msg =[x[5]]))
-  dt[str(x[1])] = {}
-  dt[str(x[1])][x[0]] = {}
-  #dt.append(x)
+    poc = poc + 1
+    #print(x)
+    dt[poc] = {'channel' : x[1], 'date' : x[0], 'codec' : x[2], 'stage' : x[3], 'Relapsed' : x[4], 'BEelapsed' : x[5]}
+    #data.append(dict(channel = str([x[1]]), date = x[0], codec =[x[2]], stage = [x[3]], Relapsed =[x[4]], exit_msg =[x[5]]))
+  
+  
 
-print(dt)
+
 dx = pd.DataFrame(dt)
-#print(dx)
+print(dx)
 
 #dictionary = {}
 #dictionary["channel"] = {}
