@@ -18,7 +18,7 @@ sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, 
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
 print(len(myresult))
-
+''''''
 dates = []
 channels = []
 dash_kalt = []
@@ -39,8 +39,8 @@ for x in myresult:
   hls_brpk.append(float(x[7]))
 
   data = {}
-  data['channels'] = channels
   data['dates'] = dates
+  data['channels'] = channels
   data['dash_kalt'] = dash_kalt
   data['dash_kalt_be'] = dash_kalt_be
   data['dash_brpk'] = dash_brpk
@@ -49,9 +49,13 @@ for x in myresult:
   data['hls_brpk'] = hls_brpk
 
 dx = pd.DataFrame(data)
+dx = dx[(dx.channels == 'RTS1HD')]
 print(dx)
 mask = dx.channels.isin(dx.channels.unique())
-fig = px.line(dx[mask], x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], color='channels', markers=True)
+print(mask)
+dd = (dx[mask])
+print(dd)
+fig = px.line(dx[mask], x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True)
 fig.show()
 
 '''

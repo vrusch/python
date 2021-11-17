@@ -99,7 +99,7 @@ def func():
                     DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
                     logger.info("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                     DASH_B_exit_msg = "OK" 
-                    DASH_B_payload = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
+                    DASH_B_payload = "Status code: "+str(get_responsecode) 
                 else:
                     DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
                     logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
@@ -111,7 +111,7 @@ def func():
             else:
                 logger.warning("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                 DASH_B_exit_msgexit_msg = "ERROR"
-                DASH_B_exit_msgpayload = "--KALT not returned any URL"
+                DASH_B_payload = "--KALT not returned any URL"
                 DASH_B_elapse = ""
 
 
@@ -146,7 +146,7 @@ def func():
                     HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
                     logger.info("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                     HLS_B_exit_msg = "OK" 
-                    HLS_B_payload = "Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
+                    HLS_B_payload = "Status code: "+str(get_responsecode) 
                 else:
                     HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
                     logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
@@ -157,10 +157,10 @@ def func():
             else:
                 logger.warning("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                 HLS_B_exit_msgexit_msg = "ERROR"
-                HLS_B_exit_msgpayload = "--KALT not returned any URL"
+                HLS_B_payload = "--KALT not returned any URL"
                 HLS_B_elapse = ""
 
-            #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK
+            #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_Bpayload
             mycursor = mydb.cursor()
             sql = "INSERT INTO channel_test_upr (date, partnerID, channel_number, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             val = (RQdate, partnerID, channelNumber, channelName, RelapsedDASH, DASH_K_BE_execTime, DASH_B_elapsed, RelapsedHLS, HLS_K_BE_execTime, HLS_B_elapsed)

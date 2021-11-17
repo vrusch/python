@@ -165,8 +165,10 @@ def get_context(assetId, login_ks, header, phoenixURL):
     try:
         dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         responseDASH = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=header)
+        time.sleep(0.5)
     except:
-        time.sleep(1)
+        print('EXEPTION WAIT FOR')
+        time.sleep(5)
         dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
     RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
@@ -189,13 +191,12 @@ def get_context(assetId, login_ks, header, phoenixURL):
     sendHLS = phoenixURL + servis
     try:
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), timeout= 2, headers=header)
+        time.sleep(0.5)
     except:
-        time.sleep(1)
+        print('EXEPTION WAIT FOR')
+        time.sleep(5)
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
     RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
 
     return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS, dateS
-
-def send_alarm(msg):
-    print(msg)
     
