@@ -43,8 +43,8 @@ for x in myresult:
   exit_msg.append(x[6])
   
   data = {}
-  data['date'] = date
   data['channel'] = channel_name
+  data['date'] = date
   data['codec'] = codec
   data['stage'] = stage
   data['Relapsed'] = Relapsed
@@ -53,17 +53,12 @@ for x in myresult:
 
 
 dx = pd.DataFrame(data)
-#print(dx.info()) 
-#print(dx)
+print(dx)
 #dff = dx[(dx.channel == 'RTS1HD') & (dx.codec == 'DASH') & (dx.stage == 'KALT')]
-#print(dff)
-#dff = dff.sort_values(by="date")
+#dxa = dx.query("channel in ['RTS1HD'] and codec in ['DASH'] and stage in ['KALT']")
+channels = dx.channel.unique()
+mask = dx.channel.isin(channels)
+fig = px.line(dx[mask], x="date", y="Relapsed", color='channel', markers=True)
 
-dxa = dx.query("channel in ['RTS1HD'] and codec in ['DASH'] and stage in ['KALT']")
-dxb = dx.query("channel in ['RTS1HD'] and codec in ['DASH'] and stage in ['BRPK']")
-print(dxb)
-
-
-fig = px.line(dxb, x='date', y='Relapsed', markers=True, text="Relapsed", symbol="stage")
-fig = px.line(dxa, x='date', y='Relapsed', markers=True, text="Relapsed", symbol="stage")
+#fig = px.line(dxa, x='date', y='Relapsed', markers=True, symbol="stage"
 fig.show()

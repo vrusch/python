@@ -65,7 +65,9 @@ plt.title("Channel: " + channel_name)
 plt.grid(linestyle = 'dashed', linewidth = 0.5)
 plt.show()
 '''
-fig = px.line(dx, x="DATE", y=["DASH KALT", "DASH BRPK", "HLS KALT", "HLS BRPK"], markers=True)
+interpolation = 'hvh' # linear, spline, vhv, hvh, vh, hv
+
+fig = px.area(dx, x="DATE", y=["DASH KALT", "DASH BRPK", "HLS KALT", "HLS BRPK"], markers=True, line_shape=interpolation)
 fig.show()
 
 
