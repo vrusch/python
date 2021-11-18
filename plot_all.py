@@ -55,27 +55,10 @@ for x in myresult:
   data['hls_brpk'] = hls_brpk
 
 dx = pd.DataFrame(data)
-dx = dx[(dx.channels == 'RTS1HD')]
-print('DX:')
-print(dx)
-#mask = dx.channels.isin(dx.channels.unique())
+all_channels = dx.channels.unique()
+dx = dx[(dx.channels == 'RTS1HD') | (dx.channels == 'RTS2HD')]
+sel_channels = dx.channels.unique()
 mask = dx.channels.isin(dx.channels.unique())
-print("mask:")
-print(mask)
-dd = (dx[mask])
-print('zaznamu v maska:')
-print(dd)
-fig = px.line(dx, x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True)
-fig.show()
 
-'''
-dx = pd.DataFrame(data)
-#print(dx)
-#dff = dx[(dx.channel == 'RTS1HD') & (dx.codec == 'DASH') & (dx.stage == 'KALT')]
-
-dash_kalt = dx.query("codec in ['DASH'] and stage in ['KALT']")
-print(dash_kalt)
-mask = dx.channel.isin(dx.channel.unique())
-fig = px.line(dx[mask], x="date", y=["Relapsed"], color='channel', markers=True)
+fig = px.line(dx[mask], x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], color='channels', markers=True)
 #fig.show()
-'''

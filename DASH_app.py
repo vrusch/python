@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 
 df = px.data.gapminder()
-print(df)
+
 all_continents = df.continent.unique()
 
 app = dash.Dash(__name__)
