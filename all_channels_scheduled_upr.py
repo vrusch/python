@@ -6,6 +6,7 @@ from KALT_config import *
 import logging
 import logging.handlers as handlers
 import csv
+import os
 
 
 #specificke promenne pro test
@@ -28,6 +29,25 @@ logHandler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
+
+#kontrola souboru
+'''
+current_path = os.getcwd()
+log_directory = current_path + '\log'
+list_dir = os.listdir(log_directory)
+if os.path.exists('./log/channel_availability_test_upr.log'):
+    print("found")
+    for item in list_dir:
+        print(str(item))
+        if item.endswith(".log"):
+
+            i = os.remove(os.path.join(log_directory, item ) )
+            print(str(i))
+else:
+    logger.info()
+#os.path.exists('./'+inputfile)
+logger.info("DELETED ALL LOG FILES ...")
+'''
 
 #ziskani credentials a API hlavicek, phoenixURL
 credentials = user_login(partnerID, 4)
@@ -110,9 +130,9 @@ def func():
 
             else:
                 logger.warning("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                DASH_B_exit_msgexit_msg = "ERROR"
+                DASH_B_exit_msg = "ERROR"
                 DASH_B_payload = "--KALT not returned any URL"
-                DASH_B_elapse = ""
+                DASH_B_elapsed = ""
 
 
 
@@ -130,7 +150,7 @@ def func():
                 Etype = responseHLS['result']['actions'][0]['type']
                 Emsg = responseHLS['result']['messages'][0]['message']
                 HLS_K_exit_msg = "ERROR"
-                DASH_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
+                HLS_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
                 logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                 logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
                 logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
@@ -156,14 +176,14 @@ def func():
                     HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
             else:
                 logger.warning("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                HLS_B_exit_msgexit_msg = "ERROR"
+                HLS_B_exit_msg = "ERROR"
                 HLS_B_payload = "--KALT not returned any URL"
-                HLS_B_elapse = ""
+                HLS_B_elapsed = ""
 
-            #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_Bpayload
+            #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
             mycursor = mydb.cursor()
-            sql = "INSERT INTO channel_test_upr (date, partnerID, channel_number, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            val = (RQdate, partnerID, channelNumber, channelName, RelapsedDASH, DASH_K_BE_execTime, DASH_B_elapsed, RelapsedHLS, HLS_K_BE_execTime, HLS_B_elapsed)
+            sql = "INSERT INTO channel_test_upr (date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            val = (RQdate, partnerID, channelNumber, channelName, RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) 
             mycursor.execute(sql, val)
             mydb.commit()
             lastID = mycursor.lastrowid

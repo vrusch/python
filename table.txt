@@ -1,0 +1,23 @@
+CREATE TABLE `channel_test_upr` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` varchar(45) DEFAULT NULL,
+  `partnerID` varchar(45) DEFAULT NULL,
+  `channel_num` varchar(45) DEFAULT NULL,
+  `channel_name` varchar(45) DEFAULT NULL,
+  `DASH_KALT` varchar(45) DEFAULT NULL,
+  `DASH_KALT_BE` varchar(45) DEFAULT NULL,
+  `DASH_K_exit_msg` varchar(45) DEFAULT NULL,
+  `DASH_BRPK` varchar(45) DEFAULT NULL,
+  `DASH_B_exit_msg` varchar(45) DEFAULT NULL,
+  `HLS_KALT` varchar(45) DEFAULT NULL,
+  `HLS_KALT_BE` varchar(45) DEFAULT NULL,
+  `HLS_K_exit_msg` varchar(45) DEFAULT NULL,
+  `HLS_BRPK` varchar(45) DEFAULT NULL,
+  `HLS_B_exit_msg` varchar(45) DEFAULT NULL,
+  `DASH_K_payload` mediumtext,
+  `DASH_B_payload` mediumtext,
+  `HLS_K_payload` mediumtext,
+  `HLS_B_payload` mediumtext,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=649 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
