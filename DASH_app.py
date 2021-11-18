@@ -19,7 +19,7 @@ graphs = html.Div([
         id="checklist",
         options=[{"label": x, "value": x} 
                  for x in all_continents],
-        value=all_continents[3:],
+        value=all_continents[3:], #defaultna hodnota
         labelStyle={'display': 'inline-block'}
     ),
     dcc.Graph(id="line-chart"),
@@ -28,7 +28,8 @@ graphs = html.Div([
 @app.callback(
     Output("line-chart", "figure"), 
     [Input("checklist", "value")])
-def update_line_chart(continents):
+    
+def update_line_chart(continents): #honota parametru do masky
     mask = df.continent.isin(continents)
     fig = px.line(df[mask], 
         x="year", y="lifeExp", color='country')

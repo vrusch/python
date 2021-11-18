@@ -13,9 +13,9 @@ from dash_bootstrap_templates import load_figure_template
 
 # This loads the "cyborg" themed figure template from dash-bootstrap-templates library,
 # adds it to plotly.io and makes it the default figure template.
-load_figure_template("cyborg")
+load_figure_template("minty")
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.MINTY])
 
 df = px.data.gapminder()
 
@@ -59,7 +59,24 @@ graphs = html.Div(
     ]
 )
 
-app.layout = dbc.Container(fluid=True, children=[graphs])
+# These buttons are added to the app just to show the Boostrap theme colors
+buttons = html.Div(
+    [
+        dbc.Button("Primary", color="primary", className="mr-1"),
+        dbc.Button("Secondary", color="secondary", className="mr-1"),
+        dbc.Button("Success", color="success", className="mr-1"),
+        dbc.Button("Warning", color="warning", className="mr-1"),
+        dbc.Button("Danger", color="danger", className="mr-1"),
+        dbc.Button("Info", color="info", className="mr-1"),
+        dbc.Button("Light", color="light", className="mr-1"),
+        dbc.Button("Dark", color="dark", className="mr-1"),
+        dbc.Button("Link", color="link"),
+    ],
+)
+
+heading = html.H1("Dash Bootstrap Template Demo", className="bg-primary text-white p-2")
+
+app.layout = dbc.Container(fluid=True, children=[heading, buttons, graphs])
 
 
 if __name__ == "__main__":
