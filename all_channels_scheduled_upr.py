@@ -102,14 +102,21 @@ def func():
                     logger.info("[RESULT][KALT][DASH]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                     DASH_kalt_reason = True
                 except:
-                    Etype = responseDASH['result']['actions'][0]['type']
-                    Emsg = responseDASH['result']['messages'][0]['message']
-                    DASH_K_exit_msg = "ERROR"
-                    DASH_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
-                    logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                    logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
-                    logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
-                    DASH_kalt_reason = False
+                    if responseDASH['result']['sources']:
+                        Etype = responseDASH['result']['actions'][0]['type']
+                        Emsg = responseDASH['result']['messages'][0]['message']
+                        DASH_K_exit_msg = "ERROR"
+                        DASH_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
+                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
+                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
+                        DASH_kalt_reason = False
+                    else:
+                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --not result?" + responseDASH['result'])
+                        DASH_K_url = 'NONE'
+                        DASH_K_exit_msg = "ERROR"
+                        DASH_K_payload = "NONE RESULT"
+                        DASH_kalt_reason = False
 
                 #analyzeDASH -BRPK
                 if DASH_kalt_reason:
@@ -150,15 +157,22 @@ def func():
                     logger.info("[RESULT][KALT][HLS]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                     HLS_kalt_reason = True
                 except:
-                    Etype = responseHLS['result']['actions'][0]['type']
-                    Emsg = responseHLS['result']['messages'][0]['message']
-                    HLS_K_exit_msg = "ERROR"
-                    HLS_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
-                    logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                    logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
-                    logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
-                    HLS_kalt_reason = False
-
+                    if responseHLS['result']['sources']:
+                        Etype = responseHLS['result']['actions'][0]['type']
+                        Emsg = responseHLS['result']['messages'][0]['message']
+                        HLS_K_exit_msg = "ERROR"
+                        HLS_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
+                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
+                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
+                        HLS_kalt_reason = False
+                    else:
+                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --not result?" + responseDASH['result'])
+                        HLS_K_url = 'NONE'
+                        HLS_K_exit_msg = "ERROR"
+                        HLS_K_payload = "NONE RESULT"
+                        HLS_kalt_reason = False
+                        
 
                 #analyzeHLS -BRPK
                 if HLS_kalt_reason:

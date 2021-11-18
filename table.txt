@@ -1,4 +1,4 @@
-CREATE TABLE `channel_test_upr` (
+CREATE TABLE `mydatabase`.`channel_test_upr` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` varchar(45) DEFAULT NULL,
   `partnerID` varchar(45) DEFAULT NULL,
