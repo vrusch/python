@@ -112,7 +112,7 @@ def func():
                         logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
                         DASH_kalt_reason = False
                     else:
-                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --not result?" + responseDASH['result'])
+                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --not result?")
                         DASH_K_url = 'NONE'
                         DASH_K_exit_msg = "ERROR"
                         DASH_K_payload = "NONE RESULT"
@@ -167,7 +167,7 @@ def func():
                         logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
                         HLS_kalt_reason = False
                     else:
-                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --not result?" + responseDASH['result'])
+                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --not result?")
                         HLS_K_url = 'NONE'
                         HLS_K_exit_msg = "ERROR"
                         HLS_K_payload = "NONE RESULT"
