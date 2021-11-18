@@ -3,14 +3,18 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import plotly.express as px
+import dash_bootstrap_components as dbc
+from dash_bootstrap_templates import load_figure_template
+
+load_figure_template("cyborg")
 
 df = px.data.gapminder()
 
 all_continents = df.continent.unique()
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
-app.layout = html.Div([
+graphs = html.Div([
     dcc.Checklist(
         id="checklist",
         options=[{"label": x, "value": x} 
@@ -30,4 +34,7 @@ def update_line_chart(continents):
         x="year", y="lifeExp", color='country')
     return fig
 
-app.run_server(debug=True)
+app.layout = dbc.Container(fluid=True, children=[graphs])
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
