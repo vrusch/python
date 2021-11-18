@@ -162,16 +162,16 @@ def get_context(assetId, login_ks, header, phoenixURL):
             "apiVersion": apiVersion
         }
     sendDASH = phoenixURL + servis
+    dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
-        dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         responseDASH = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=header)
-        time.sleep(0.5)
+        RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
     except:
-        print('EXEPTION WAIT FOR 5s')
-        time.sleep(5)
-        dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        responseDASH = requests.post(sendDASH, json.dumps(dataDASH), headers=header)
-    RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
+        print('EXEPTION')
+        responseDASH = None
+        RelapsedDASH = None
+        
+    
 
     dataHLS = {
             "assetId": assetId,
@@ -191,12 +191,11 @@ def get_context(assetId, login_ks, header, phoenixURL):
     sendHLS = phoenixURL + servis
     try:
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), timeout= 2, headers=header)
-        time.sleep(0.5)
+        RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
     except:
-        print('EXEPTION WAIT FOR 5s')
-        time.sleep(5)
-        responseHLS = requests.post(sendHLS, json.dumps(dataHLS), headers=header)
-    RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
-
+        print('EXEPTION')
+        responseHLS = None
+        RelapsedHLS = None
+    
     return responseDASH, responseHLS, RelapsedDASH, RelapsedHLS, dateS
     
