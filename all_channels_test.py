@@ -84,14 +84,14 @@ if ks == 'ERROR':
     logging.info("No login ks returned")
 else:
     the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
-    logging.warning("[LOGIN]KS EXPIRATION: " + str(the_datetime))
+    logging.error("[LOGIN]KS EXPIRATION: " + str(the_datetime))
     logging.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logging.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logging.info("[LOGIN]User KS: " + ks[0])
 
 def func():
     dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    logging.warning("======= THIST ROUND START: " + dateX + " ===============================================")
+    logging.error("======= THIST ROUND START: " + dateX + " ===============================================")
     #print("ROUND START: " + dateX)
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
@@ -140,30 +140,41 @@ def func():
 
                 #analyzeDASH -BRPK
                 if DASH_kalt_reason:
+                    TIMEOUT = 0
                     logging.info("--> CONTINUE TEST FOR DASH -- STAGE BRPR")
-                    GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=5)
-                    get_responsecode = GETresponse.status_code
-                    if get_responsecode == 200:
-                        DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                        logging.info("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                        DASH_B_exit_msg = "OK" 
-                        DASH_B_payload = "Status code: "+str(get_responsecode) 
+                    try: 
+                        GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=5)
+                    except requests.exceptions.Timeout: 
+                        logging.error("REQUEST TIMEOUT")
+                        TIMEOUT = 1
+  
+                    if TIMEOUT == 0:
+                        get_responsecode = GETresponse.status_code
+                        if get_responsecode == 200:
+                            DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            logging.info("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            DASH_B_exit_msg = "OK" 
+                            DASH_B_payload = "Status code: "+str(get_responsecode) 
+                        else:
+                            DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            logging.warning(str(GETresponse.content))
+                            logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
+                            logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
+                            DASH_B_exit_msg = "ERROR"
+                            DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                        logging.warning(str(GETresponse.content))
-                        logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                        logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
-                        logging.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
-                        DASH_B_exit_msg = "ERROR"
-                        DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
+                        DASH_B_elapsed = ''
+                        DASH_B_exit_msg = 'ERROR'
+                        DASH_B_payload = 'REQUEST TIMEOUT'
 
                 else:
-                    logging.warning("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                    logging.error("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                     DASH_B_exit_msg = "ERROR"
                     DASH_B_payload = "--KALT not returned any URL"
                     DASH_B_elapsed = ""
             else:
-                print('None')
+                #print('None')
                 logging.error("[ERROR][DASH]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
 
     #(assetId, codec, response , headerGET)
@@ -197,24 +208,36 @@ def func():
 
                 #analyzeHLS -BRPK
                 if HLS_kalt_reason:
+                    TIMEOUT = 0
                     logging.info("--> CONTINUE TEST FOR HLS -- STAGE BRPR")
-                    GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=5)
-                    get_responsecode = GETresponse.status_code
-                    if get_responsecode == 200:
-                        HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                        logging.info("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                        HLS_B_exit_msg = "OK" 
-                        HLS_B_payload = "Status code: "+str(get_responsecode) 
+                    try: 
+                        GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=5)
+                    except requests.exceptions.Timeout: 
+                        logging.error("REQUEST TIMEOUT")
+                        TIMEOUT = 1
+                    
+                    if TIMEOUT == 0:
+                        get_responsecode = GETresponse.status_code
+                        if get_responsecode == 200:
+                            HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            logging.info("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            HLS_B_exit_msg = "OK" 
+                            HLS_B_payload = "Status code: "+str(get_responsecode) 
+                        else:
+                            HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            logging.warning(str(GETresponse.content))
+                            logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
+                            logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
+                            HLS_B_exit_msg = "ERROR"
+                            HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                        logging.warning(str(GETresponse.content))
-                        logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                        logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
-                        logging.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
-                        HLS_B_exit_msg = "ERROR"
-                        HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode)         
+                        HLS_B_elapsed = ''
+                        HLS_B_exit_msg = 'ERROR'
+                        HLS_B_payload = 'REQUEST TIMEOUT'  
+                             
                 else:
-                    logging.warning("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                    logging.error("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                     HLS_B_exit_msg = "ERROR"
                     HLS_B_payload = "--KALT not returned any URL"
                     HLS_B_elapsed = ""
@@ -229,7 +252,7 @@ def func():
                 logging.info("1 record inserted, ID:" + str(lastID))
                 RQdate = ""
             else:
-                print('None')
+                #print('None')
                 logging.error("[ERROR][HLS]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
 
 schedule.every(5).minutes.do(func)

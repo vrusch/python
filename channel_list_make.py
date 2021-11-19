@@ -92,7 +92,7 @@ except:
     
 
 #vyloucit kanaly ktere maji v mene
-vyloucit_ch = ("Cetin", "Africkenebe", "InsajderTV")
+vyloucit_ch = ("Cetin", "Africkenebe", "InsajderTV", 'VHram', 'TVMELOS', 'NasaTV', 'RTCGSAT', 'KTVZrenjanin', )
 vyloucit_poc = 0
 chan_out = []
 

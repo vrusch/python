@@ -169,10 +169,10 @@ def get_context(assetId, login_ks, header, phoenixURL):
     try:
         responseDASH = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=header)
         #logging.warning(str(responseDASH.request))
-        logging.warning(str(responseDASH.content))
+        #logging.warning(str(responseDASH.content))
         RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
     except:
-        print('EXEPTION')
+        #print('EXEPTION')
         responseDASH = None
         RelapsedDASH = None
         
@@ -197,10 +197,10 @@ def get_context(assetId, login_ks, header, phoenixURL):
     try:
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), timeout= 2, headers=header)
         #logging.warning(str(responseHLS.request))
-        logging.warning(str(responseHLS.content))
+        #logging.warning(str(responseHLS.content))
         RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
     except:
-        print('EXEPTION')
+        #print('EXEPTION')
         responseHLS = None
         RelapsedHLS = None
     
