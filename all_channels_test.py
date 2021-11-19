@@ -49,7 +49,7 @@ def httpclient_logging_patch(level=logging.DEBUG):
 httpclient_logging_patch()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.WARNING, filename="./log/channel_availability_test_upr.log", filemode="a+",
+    logging.basicConfig(level=logging.ERROR, filename="./log/channel_availability_test_upr.log", filemode="a+",
                         format="%(asctime)-0s %(levelname)-0s %(message)s")
 
 #kontrola souboru
@@ -92,7 +92,7 @@ else:
 def func():
     dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logging.error("======= THIST ROUND START: " + dateX + " ===============================================")
-    #print("ROUND START: " + dateX)
+
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
         csvreader = csv.reader(csvfile, delimiter = ';')
@@ -110,7 +110,6 @@ def func():
             RQdate = r[4]
 
 
-    #(assetId, codec, response , headerGET)
     #analyzeDASH -KALT
             logging.info("--> Start analyze DASH")
             if responseDASH != None:
@@ -177,7 +176,7 @@ def func():
                 #print('None')
                 logging.error("[ERROR][DASH]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
 
-    #(assetId, codec, response , headerGET)
+   
     #analyzeHLS: -KALT
             logging.info("--> Start analyze HLS")
             if responseHLS != None:
@@ -252,7 +251,6 @@ def func():
                 logging.info("1 record inserted, ID:" + str(lastID))
                 RQdate = ""
             else:
-                #print('None')
                 logging.error("[ERROR][HLS]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
 
 schedule.every(5).minutes.do(func)
