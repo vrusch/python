@@ -29,7 +29,7 @@ graphs = html.Div([
     Output("line-chart", "figure"), 
     [Input("checklist", "value")])
     
-def update_line_chart(continents): #honota parametru do masky
+def update_line_chart(continents): #hodnota parametru do masky
     mask = df.continent.isin(continents)
     fig = px.line(df[mask], 
         x="year", y="lifeExp", color='country')
