@@ -60,5 +60,7 @@ dx = dx[(dx.channels == 'RTS1HD') | (dx.channels == 'RTS2HD')]
 sel_channels = dx.channels.unique()
 mask = dx.channels.isin(dx.channels.unique())
 
+interpolation = 'hvh' # linear, spline, vhv, hvh, vh, hv
+#fig = px.area(dx, x="DATE", y=["DASH KALT", "DASH BRPK", "HLS KALT", "HLS BRPK"], markers=True, line_shape=interpolation)
 fig = px.line(dx[mask], x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], color='channels', markers=True)
-#fig.show()
+fig.show()

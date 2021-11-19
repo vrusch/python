@@ -1,7 +1,10 @@
+import logging
 import requests
 import json
 import datetime
 import time
+
+from requests.models import HTTPError
 
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"
@@ -165,6 +168,8 @@ def get_context(assetId, login_ks, header, phoenixURL):
     dateS =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     try:
         responseDASH = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=header)
+        #logging.warning(str(responseDASH.request))
+        logging.warning(str(responseDASH.content))
         RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
     except:
         print('EXEPTION')
@@ -191,6 +196,8 @@ def get_context(assetId, login_ks, header, phoenixURL):
     sendHLS = phoenixURL + servis
     try:
         responseHLS = requests.post(sendHLS, json.dumps(dataHLS), timeout= 2, headers=header)
+        #logging.warning(str(responseHLS.request))
+        logging.warning(str(responseHLS.content))
         RelapsedHLS =  (responseHLS.elapsed.microseconds)/1000000
     except:
         print('EXEPTION')
