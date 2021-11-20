@@ -32,46 +32,6 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 
-#stare logovani
-'''
-httpclient_logger = logging.getLogger("http.client")
-
-def httpclient_logging_patch(level=logging.DEBUG):
-    """Enable HTTPConnection debug logging to the logging framework"""
-
-    def httpclient_log(*args):
-        httpclient_logger.log(level, " ".join(args))
-
-    # mask the print() built-in in the http.client module to use
-    # logging instead
-    http.client.print = httpclient_log
-    # enable debugging
-    http.client.HTTPConnection.debuglevel = 1
-httpclient_logging_patch()
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.ERROR, filename="./log/channel_availability_test_upr.log", filemode="a+",
-                        format="%(asctime)-0s %(levelname)-0s %(message)s")
-
-#kontrola souboru
-
-current_path = os.getcwd()
-log_directory = current_path + '\log'
-list_dir = os.listdir(log_directory)
-if os.path.exists('./log/channel_availability_test_upr.log'):
-    print("found")
-    for item in list_dir:
-        print(str(item))
-        if item.endswith(".log"):
-
-            i = os.remove(os.path.join(log_directory, item ) )
-            print(str(i))
-else:
-    logger.info()
-#os.path.exists('./'+inputfile)
-logger.info("DELETED ALL LOG FILES ...")
-'''
-
 #ziskani credentials a API hlavicek, phoenixURL
 credentials = user_login(partnerID, 4)
 head = headers(partnerID)
@@ -146,7 +106,6 @@ def func():
                     try: 
                         GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=5)
                     except requests.exceptions.Timeout: 
-                        logger.error("REQUEST TIMEOUT")
                         TIMEOUT = 1
   
                     if TIMEOUT == 0:
@@ -158,25 +117,35 @@ def func():
                             DASH_B_payload = "Status code: "+str(get_responsecode) 
                         else:
                             DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                            logger.warning(str(GETresponse.content))
+                            logger.error(str(GETresponse.content))
+                            logger.error("[ERROR][BRPK][DASH]URL: "+DASH_K_url)
                             logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
                             logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
                             DASH_B_exit_msg = "ERROR"
                             DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        DASH_B_elapsed = ''
+                        logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][BRPK][DASH]URL: "+DASH_K_url)
+                        DASH_B_elapsed = 'NaN'
                         DASH_B_exit_msg = 'ERROR'
-                        DASH_B_payload = 'REQUEST TIMEOUT'
+                        DASH_B_payload = 'GET REQUEST TIMEOUT'
 
                 else:
                     logger.error("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                     DASH_B_exit_msg = "ERROR"
                     DASH_B_payload = "--KALT not returned any URL"
-                    DASH_B_elapsed = ""
+                    DASH_B_elapsed = 'NaN'
             else:
-                #print('None')
-                logger.error("[ERROR][DASH]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
+                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE? ...POST TIMEOUT?")
+                #RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, DASH_K_payload, DASH_B_payload
+                RelapsedDASH = 'NaN'
+                DASH_K_BE_execTime = 'NaN'
+                DASH_K_exit_msg = "ERROR"
+                DASH_B_elapsed = 'NaN'
+                DASH_B_exit_msg = "ERROR"
+                DASH_K_payload = "SKIPED. NO RESPONSE? ...TIMEOUT?"
+                DASH_B_payload = "--KALT not returned any URL"
 
    
     #analyzeHLS: -KALT
@@ -215,7 +184,6 @@ def func():
                     try: 
                         GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=5)
                     except requests.exceptions.Timeout: 
-                        logger.error("REQUEST TIMEOUT")
                         TIMEOUT = 1
                     
                     if TIMEOUT == 0:
@@ -227,16 +195,19 @@ def func():
                             HLS_B_payload = "Status code: "+str(get_responsecode) 
                         else:
                             HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                            logger.warning(str(GETresponse.content))
+                            logger.error(str(GETresponse.content))
+                            logger.error("[ERROR][BRPK][HLS]URL: "+HLS_K_url)
                             logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
                             logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
                             HLS_B_exit_msg = "ERROR"
                             HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        HLS_B_elapsed = ''
+                        logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][BRPK][HLS]URL: "+HLS_K_url)
+                        HLS_B_elapsed = 'NaN'
                         HLS_B_exit_msg = 'ERROR'
-                        HLS_B_payload = 'REQUEST TIMEOUT'  
+                        HLS_B_payload = 'GET REQUEST TIMEOUT'  
                              
                 else:
                     logger.error("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
@@ -244,17 +215,26 @@ def func():
                     HLS_B_payload = "--KALT not returned any URL"
                     HLS_B_elapsed = ""
 
-                #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
-                mycursor = mydb.cursor()
-                sql = "INSERT INTO channel_test_upr (date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                val = (RQdate, partnerID, channelNumber, channelName, RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) 
-                mycursor.execute(sql, val)
-                mydb.commit()
-                lastID = mycursor.lastrowid
-                logger.info("1 record inserted, ID:" + str(lastID))
-                RQdate = ""
             else:
-                logger.error("[ERROR][HLS]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE?")
+                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE? ...POST TIMEOUT?")
+                #RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, HLS_K_payload, HLS_B_payload
+                RelapsedHLS = 'NaN'
+                HLS_K_BE_execTime = 'NaN'
+                HLS_K_exit_msg = "ERROR"
+                HLS_B_elapsed = 'NaN'
+                HLS_B_exit_msg = "ERROR"
+                HLS_K_payload = "SKIPED. NO RESPONSE? ...TIMEOUT?"
+                HLS_B_payload = "--KALT not returned any URL"
+
+            #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
+            mycursor = mydb.cursor()
+            sql = "INSERT INTO channel_test_upr (date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            val = (RQdate, partnerID, channelNumber, channelName, RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload) 
+            mycursor.execute(sql, val)
+            mydb.commit()
+            lastID = mycursor.lastrowid
+            logger.info("1 record inserted, ID:" + str(lastID))
+            RQdate = ""
 
 schedule.every(5).minutes.do(func)
   
