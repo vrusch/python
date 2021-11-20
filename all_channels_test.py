@@ -43,14 +43,15 @@ if ks == 'ERROR':
     logger.error("No login ks returned")
 else:
     the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
-    logger.error("[LOGIN]KS EXPIRATION: " + str(the_datetime))
+    logger.warning("[LOGIN]KS EXPIRATION: " + str(the_datetime))
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logger.info("[LOGIN]User KS: " + ks[0])
 
 def func():
-    dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    logger.error(" TEST ROUND START AT: " + dateX)
+    dateX1 =  datetime.datetime.now()
+    dateX1a =  dateX1.strftime("%Y-%m-%d %H:%M:%S")
+    logger.warning(" TEST ROUND START AT: " + dateX1a)
 
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
@@ -103,7 +104,7 @@ def func():
                     TIMEOUT = 0
                     logger.info("--> CONTINUE TEST FOR DASH -- STAGE BRPR")
                     try: 
-                        GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=5)
+                        GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=7)
                     except requests.exceptions.Timeout: 
                         TIMEOUT = 1
   
@@ -125,11 +126,11 @@ def func():
                             DASH_B_exit_msg = "ERROR"
                             DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (7s)")
                         logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] URL: "+DASH_K_url)
                         DASH_B_elapsed = 'NaN'
                         DASH_B_exit_msg = 'ERROR'
-                        DASH_B_payload = 'GET REQUEST TIMEOUT'
+                        DASH_B_payload = 'GET REQUEST TIMEOUT (7s)'
 
                 else:
                     logger.error("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
@@ -137,14 +138,14 @@ def func():
                     DASH_B_payload = "--KALT not returned any URL"
                     DASH_B_elapsed = 'NaN'
             else:
-                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT")
+                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (7s)")
                 #RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, DASH_K_payload, DASH_B_payload
                 RelapsedDASH = 'NaN'
                 DASH_K_BE_execTime = 'NaN'
                 DASH_K_exit_msg = "ERROR"
                 DASH_B_elapsed = 'NaN'
                 DASH_B_exit_msg = "ERROR"
-                DASH_K_payload = "DASH SKIPED. NO RESPONSE ...POST TIMEOUT"
+                DASH_K_payload = "DASH SKIPED. NO RESPONSE ...POST TIMEOUT (7s)"
                 DASH_B_payload = "--KALT not returned any URL"
 
         ############################################################################################################################################  
@@ -182,7 +183,7 @@ def func():
                     TIMEOUT = 0
                     logger.info("--> CONTINUE TEST FOR HLS -- STAGE BRPR")
                     try: 
-                        GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=5)
+                        GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=7)
                     except requests.exceptions.Timeout: 
                         TIMEOUT = 1
                     
@@ -204,11 +205,11 @@ def func():
                             HLS_B_exit_msg = "ERROR"
                             HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (7s)")
                         logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] URL: "+HLS_K_url)
                         HLS_B_elapsed = 'NaN'
                         HLS_B_exit_msg = 'ERROR'
-                        HLS_B_payload = 'GET REQUEST TIMEOUT'  
+                        HLS_B_payload = 'GET REQUEST TIMEOUT (7s)'  
                              
                 else:
                     logger.error("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
@@ -217,14 +218,14 @@ def func():
                     HLS_B_elapsed = 'NaN'
 
             else:
-                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT")
+                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (7s)")
                 #RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, HLS_K_payload, HLS_B_payload
                 RelapsedHLS = 'NaN'
                 HLS_K_BE_execTime = 'NaN'
                 HLS_K_exit_msg = "ERROR"
                 HLS_B_elapsed = 'NaN'
                 HLS_B_exit_msg = "ERROR"
-                HLS_K_payload = "HLS SKIPED. NO RESPONSE ...POST TIMEOUT"
+                HLS_K_payload = "HLS SKIPED. NO RESPONSE ...POST TIMEOUT (7s)"
                 HLS_B_payload = "--KALT not returned any URL"
 
             #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
@@ -234,12 +235,14 @@ def func():
             mycursor.execute(sql, val)
             mydb.commit()
             lastID = mycursor.lastrowid
-            logger.warning("1 record inserted, ID:" + str(lastID))
-            logger.warning("Values:" + str(val))
+            logger.info("1 record inserted, ID:" + str(lastID))
+            logger.info("Values:" + str(val))
             RQdate = ""
 
-    dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    logger.error(" TEST ROUND STOP AT: " + dateX)
+    dateX2 =  datetime.datetime.now()
+    dateX2a =  dateX2.strftime("%Y-%m-%d %H:%M:%S")
+    dateX3 = dateX2 - dateX1
+    logger.error(" TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ dateX3 + ")")
 
 schedule.every(5).minutes.do(func)
   
