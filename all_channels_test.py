@@ -22,7 +22,6 @@ mydb = mysql.connector.connect(
 )
 
 #logovani a rotovani logu
-
 logger = logging.getLogger('TLRS_avia_app')
 logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('./log/TLRS_availability_channel_test.log', maxBytes=5242880, backupCount=5)
@@ -30,7 +29,6 @@ logHandler.setLevel(logging.ERROR)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
-
 
 #ziskani credentials a API hlavicek, phoenixURL
 credentials = user_login(partnerID, 4)
@@ -42,7 +40,7 @@ phoenixURL = head[2]
 #ziskani user ks
 ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[2], phoenixURL, headerPOST)
 if ks == 'ERROR':
-    logger.info("No login ks returned")
+    logger.error("No login ks returned")
 else:
     the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
     logger.error("[LOGIN]KS EXPIRATION: " + str(the_datetime))
@@ -52,7 +50,7 @@ else:
 
 def func():
     dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    logger.error(" THIST ROUND START: " + dateX)
+    logger.error(" TEST ROUND START AT: " + dateX)
 
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
@@ -62,7 +60,7 @@ def func():
             channelName = row[0]
             assetId = row[1]
             logger.info("=============================================================================================")
-            logger.warning("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
+            logger.info("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
             r = get_context(assetId, ks[0], headerPOST, phoenixURL)
             responseDASH = r[0]
             responseHLS = r[1]
@@ -70,8 +68,8 @@ def func():
             RelapsedHLS = r[3]
             RQdate = r[4]
 
-
-    #analyzeDASH -KALT
+        ############################################################################################################################################ 
+        #analyzeDASH -KALT
             logger.info("--> Start analyze DASH")
             if responseDASH != None:
                 responseDASH = responseDASH.json()
@@ -80,7 +78,7 @@ def func():
                     DASH_K_url = responseDASH['result']['sources'][0]['url']
                     DASH_K_exit_msg = "OK"
                     DASH_K_payload = DASH_K_url
-                    logger.info("[RESULT][KALT][DASH]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
+                    logger.info("[RESULT][DASH][KALT]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                     DASH_kalt_reason = True
                 except:
                     if responseDASH['result']:
@@ -88,16 +86,17 @@ def func():
                         Emsg = responseDASH['result']['messages'][0]['message']
                         DASH_K_exit_msg = "ERROR"
                         DASH_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
-                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
-                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
                         DASH_kalt_reason = False
                     else:
-                        logger.error("[ERROR][KALT][DASH]["+channelName+"]["+channelNumber+"]ERROR: --not result?")
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR: --KALT not result")
                         DASH_K_url = 'NONE'
                         DASH_K_exit_msg = "ERROR"
                         DASH_K_payload = "NONE RESULT"
                         DASH_kalt_reason = False
+                        RelapsedDASH = 'NaN'
 
                 #analyzeDASH -BRPK
                 if DASH_kalt_reason:
@@ -112,43 +111,44 @@ def func():
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
                             DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                            logger.info("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.info("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             DASH_B_exit_msg = "OK" 
                             DASH_B_payload = "Status code: "+str(get_responsecode) 
                         else:
-                            DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            #DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            DASH_B_elapsed = 'NaN'
                             logger.error(str(GETresponse.content))
-                            logger.error("[ERROR][BRPK][DASH]URL: "+DASH_K_url)
-                            logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                            logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
-                            logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
+                            logger.error("[ERROR][DASH][BRPK]URL: "+DASH_K_url)
+                            logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
+                            logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
                             DASH_B_exit_msg = "ERROR"
                             DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][BRPK][DASH]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
-                        logger.error("[ERROR][BRPK][DASH]URL: "+DASH_K_url)
+                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] URL: "+DASH_K_url)
                         DASH_B_elapsed = 'NaN'
                         DASH_B_exit_msg = 'ERROR'
                         DASH_B_payload = 'GET REQUEST TIMEOUT'
 
                 else:
-                    logger.error("[RESULT][BRPK][DASH]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                    logger.error("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                     DASH_B_exit_msg = "ERROR"
                     DASH_B_payload = "--KALT not returned any URL"
                     DASH_B_elapsed = 'NaN'
             else:
-                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE? ...POST TIMEOUT?")
+                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT")
                 #RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, DASH_K_payload, DASH_B_payload
                 RelapsedDASH = 'NaN'
                 DASH_K_BE_execTime = 'NaN'
                 DASH_K_exit_msg = "ERROR"
                 DASH_B_elapsed = 'NaN'
                 DASH_B_exit_msg = "ERROR"
-                DASH_K_payload = "SKIPED. NO RESPONSE? ...TIMEOUT?"
+                DASH_K_payload = "DASH SKIPED. NO RESPONSE ...POST TIMEOUT"
                 DASH_B_payload = "--KALT not returned any URL"
 
-   
-    #analyzeHLS: -KALT
+        ############################################################################################################################################  
+        #analyzeHLS: -KALT
             logger.info("--> Start analyze HLS")
             if responseHLS != None:
                 responseHLS = responseHLS.json()
@@ -157,7 +157,7 @@ def func():
                     HLS_K_url = responseHLS['result']['sources'][0]['url']
                     HLS_K_exit_msg = "OK"
                     HLS_K_payload = HLS_K_url
-                    logger.info("[RESULT][KALT][HLS]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
+                    logger.info("[RESULT][HLS][KALT]["+channelName+"]["+channelNumber+"]REASON: OK --KALT returned URL")
                     HLS_kalt_reason = True
                 except:
                     if responseHLS['result']:
@@ -165,18 +165,18 @@ def func():
                         Emsg = responseHLS['result']['messages'][0]['message']
                         HLS_K_exit_msg = "ERROR"
                         HLS_K_payload = "--KALT Error type: " + Etype + "; Error reason: " + Emsg
-                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
-                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
-                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR: type: " + Etype)
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR: message: " + Emsg)
                         HLS_kalt_reason = False
                     else:
-                        logger.error("[ERROR][KALT][HLS]["+channelName+"]["+channelNumber+"]ERROR: --not result?")
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR: --KALT not result")
+                        RelapsedHLS = 'NaN'
                         HLS_K_url = 'NONE'
                         HLS_K_exit_msg = "ERROR"
                         HLS_K_payload = "NONE RESULT"
                         HLS_kalt_reason = False
                         
-
                 #analyzeHLS -BRPK
                 if HLS_kalt_reason:
                     TIMEOUT = 0
@@ -190,40 +190,41 @@ def func():
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
                             HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
-                            logger.info("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.info("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             HLS_B_exit_msg = "OK" 
                             HLS_B_payload = "Status code: "+str(get_responsecode) 
                         else:
-                            HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            #HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            HLS_B_elapsed = 'NaN'
                             logger.error(str(GETresponse.content))
-                            logger.error("[ERROR][BRPK][HLS]URL: "+HLS_K_url)
-                            logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
-                            logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
-                            logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
+                            logger.error("[ERROR][HLS][BRPK]URL: "+HLS_K_url)
+                            logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
+                            logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
                             HLS_B_exit_msg = "ERROR"
                             HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][BRPK][HLS]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
-                        logger.error("[ERROR][BRPK][HLS]URL: "+HLS_K_url)
+                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT")
+                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] URL: "+HLS_K_url)
                         HLS_B_elapsed = 'NaN'
                         HLS_B_exit_msg = 'ERROR'
                         HLS_B_payload = 'GET REQUEST TIMEOUT'  
                              
                 else:
-                    logger.error("[RESULT][BRPK][HLS]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
+                    logger.error("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
                     HLS_B_exit_msg = "ERROR"
                     HLS_B_payload = "--KALT not returned any URL"
-                    HLS_B_elapsed = ""
+                    HLS_B_elapsed = 'NaN'
 
             else:
-                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE? ...POST TIMEOUT?")
+                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT")
                 #RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, HLS_K_payload, HLS_B_payload
                 RelapsedHLS = 'NaN'
                 HLS_K_BE_execTime = 'NaN'
                 HLS_K_exit_msg = "ERROR"
                 HLS_B_elapsed = 'NaN'
                 HLS_B_exit_msg = "ERROR"
-                HLS_K_payload = "SKIPED. NO RESPONSE? ...TIMEOUT?"
+                HLS_K_payload = "HLS SKIPED. NO RESPONSE ...POST TIMEOUT"
                 HLS_B_payload = "--KALT not returned any URL"
 
             #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
@@ -233,8 +234,12 @@ def func():
             mycursor.execute(sql, val)
             mydb.commit()
             lastID = mycursor.lastrowid
-            logger.info("1 record inserted, ID:" + str(lastID))
+            logger.warning("1 record inserted, ID:" + str(lastID))
+            logger.warning("Values:" + str(val))
             RQdate = ""
+
+    dateX =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    logger.error(" TEST ROUND STOP AT: " + dateX)
 
 schedule.every(5).minutes.do(func)
   

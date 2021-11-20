@@ -33,16 +33,10 @@ for x in myresult:
   channels.append(x[1])
   dash_kalt.append(float(x[2]))
   dash_kalt_be.append(float(x[3]))
-  if x[4] == '':
-    dash_brpk.append(NaN)
-  else:
-    dash_brpk.append(float(x[4]))
+  dash_brpk.append(float(x[4]))
   hls_kalt.append(float(x[5]))
   hls_kalt_be.append(float(x[6]))
-  if x[7] == '':
-    hls_brpk.append(NaN)
-  else:
-    hls_brpk.append(float(x[7]))
+  hls_brpk.append(float(x[7]))
 
   data = {}
   data['dates'] = dates
@@ -55,14 +49,23 @@ for x in myresult:
   data['hls_brpk'] = hls_brpk
 
 dx = pd.DataFrame(data)
+dx['DASH'] = dx.apply(lambda row: row.dash_kalt + row.dash_brpk, axis=1)
+dx['HLS'] = dx.apply(lambda row: row.hls_kalt + row.hls_brpk, axis=1)
 all_channels = dx.channels.unique()
-#dx = dx[(dx.channels == 'RTS1HD') | (dx.channels == 'RTS2HD')]
-dx = dx[(dx.channels == 'RTS1HD')]
 
-sel_channels = dx.channels.unique()
+
+
+
+
+dxv = dx[(dx.channels == 'RTS1HD')]
+
+#indexed_dx = dx.set_index(['channels'])
+
+
+
 mask = dx.channels.isin(dx.channels.unique())
 
 interpolation = 'linear' # linear, spline, vhv, hvh, vh, hv
-#fig = px.area(dx, x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
-fig = px.line(dx, x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
+#fig = px.line(dxv, x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
+fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels',  markers=True, line_shape=interpolation)
 fig.show()
