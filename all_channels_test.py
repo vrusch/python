@@ -25,7 +25,7 @@ mydb = mysql.connector.connect(
 logger = logging.getLogger('TLRS_avia_app')
 logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('./log/TLRS_availability_channel_test.log', maxBytes=5242880, backupCount=5)
-logHandler.setLevel(logging.ERROR)
+logHandler.setLevel(logging.WARNING)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
@@ -51,7 +51,7 @@ else:
 def func():
     dateX1 =  datetime.datetime.now()
     dateX1a =  dateX1.strftime("%Y-%m-%d %H:%M:%S")
-    logger.warning(" TEST ROUND START AT: " + dateX1a)
+    logger.warning(" -> TEST ROUND START AT: " + dateX1a)
 
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
@@ -242,7 +242,7 @@ def func():
     dateX2 =  datetime.datetime.now()
     dateX2a =  dateX2.strftime("%Y-%m-%d %H:%M:%S")
     dateX3 = dateX2 - dateX1
-    logger.error(" TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ dateX3 + ")")
+    logger.error(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ dateX3 + ")")
 
 schedule.every(5).minutes.do(func)
   
