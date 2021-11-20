@@ -1,7 +1,6 @@
 __pycache__/*
-log/*
-*.csv
+
 __venv__/*
-test.log
-opc_tlrs.csv
-opc_tlrs.csv
+
+
+
