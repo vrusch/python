@@ -242,7 +242,7 @@ def func():
     dateX2 =  datetime.datetime.now()
     dateX2a =  dateX2.strftime("%Y-%m-%d %H:%M:%S")
     dateX3 = dateX2 - dateX1
-    logger.error(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ dateX3 + ")")
+    logger.warning(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ str(dateX3) + ")")
 
 schedule.every(5).minutes.do(func)
   

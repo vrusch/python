@@ -57,15 +57,22 @@ all_channels = dx.channels.unique()
 dt = dx[(dx['dates'] > '2021-11-20 14:00:00') & (dx['dates'] <= '2021-11-20 15:00:00')]
 #print(dt)
 
-print(dx.nlargest(1, 'DASH'))
-print(dx.nsmallest(1, 'DASH'))
-print(dx ["DASH"].mean())
+#print(dx.nlargest(1, 'DASH'))
+#print(dx.nsmallest(1, 'DASH'))
+#print(dx ["DASH"].mean())
+#print(dx ["HLS"].mean())
+
 
 
 
 
 dxv = dx[(dx.channels == 'RTS1HD')]
-print(dxv)
+print(dxv.nlargest(1, 'DASH'))
+print(dxv.nsmallest(1, 'DASH'))
+print(dxv["DASH"].mean())
+print(dxv["HLS"].mean())
+print(dxv["dash_kalt"].hasnans)
+#print(dxv)
 
 #indexed_dx = dx.set_index(['channels'])
 
@@ -74,10 +81,11 @@ print(dxv)
 mask = dx.channels.isin(dx.channels.unique())
 
 interpolation = 'linear' # linear, spline, vhv, hvh, vh, hv
-#fig = px.area(dxv, x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
+fig = px.line(dxv, x="dates", y=["DASH", "HLS", "dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
 #fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels', markers=True, line_shape=interpolation)
+fig.show()
 
-
+'''
 fig = go.Figure()
 fig.add_trace(go.Bar(x=dxv['dates'],
                 y=dxv['DASH'],
@@ -110,3 +118,4 @@ fig.update_layout(
 )
 fig.update_layout(barmode='group', xaxis_tickangle=-45)
 fig.show()
+'''
