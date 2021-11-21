@@ -130,8 +130,8 @@ def func():
                         else:
                             #DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
                             DASH_B_elapsed = 'NaN'
-                            logger.error("[ERROR][DASH][BRPK]Response: "+str(GETresponse.content))
-                            logger.error("[ERROR][DASH][BRPK]URL: "+DASH_K_url)
+                            logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response: "+str(GETresponse.content))
+                            logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]URL: "+DASH_K_url)
                             logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
                             logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(DASH_B_elapsed)) 
@@ -209,8 +209,8 @@ def func():
                         else:
                             #HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
                             HLS_B_elapsed = 'NaN'
-                            logger.error("[ERROR][HLS][BRPK]Response: "+str(GETresponse.content))
-                            logger.error("[ERROR][HLS][BRPK]URL: "+HLS_K_url)
+                            logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response: "+str(GETresponse.content))
+                            logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]URL: "+HLS_K_url)
                             logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
                             logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Elapsed time: "+str(HLS_B_elapsed)) 
