@@ -138,14 +138,14 @@ def func():
                     DASH_B_payload = "--KALT not returned any URL"
                     DASH_B_elapsed = 'NaN'
             else:
-                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (7s)")
+                logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (5s)")
                 #RelapsedDASH, DASH_K_BE_execTime, DASH_K_exit_msg, DASH_B_elapsed, DASH_B_exit_msg, DASH_K_payload, DASH_B_payload
                 RelapsedDASH = 'NaN'
                 DASH_K_BE_execTime = 'NaN'
                 DASH_K_exit_msg = "ERROR"
                 DASH_B_elapsed = 'NaN'
                 DASH_B_exit_msg = "ERROR"
-                DASH_K_payload = "DASH SKIPED. NO RESPONSE ...POST TIMEOUT (7s)"
+                DASH_K_payload = "DASH SKIPED. NO RESPONSE ...POST TIMEOUT (5s)"
                 DASH_B_payload = "--KALT not returned any URL"
 
         ############################################################################################################################################  
@@ -218,14 +218,14 @@ def func():
                     HLS_B_elapsed = 'NaN'
 
             else:
-                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (7s)")
+                logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"] SKIPED. NO RESPONSE ...POST TIMEOUT (5s)")
                 #RelapsedHLS, HLS_K_BE_execTime, HLS_K_exit_msg, HLS_B_elapsed, HLS_B_exit_msg, HLS_K_payload, HLS_B_payload
                 RelapsedHLS = 'NaN'
                 HLS_K_BE_execTime = 'NaN'
                 HLS_K_exit_msg = "ERROR"
                 HLS_B_elapsed = 'NaN'
                 HLS_B_exit_msg = "ERROR"
-                HLS_K_payload = "HLS SKIPED. NO RESPONSE ...POST TIMEOUT (7s)"
+                HLS_K_payload = "HLS SKIPED. NO RESPONSE ...POST TIMEOUT (5s)"
                 HLS_B_payload = "--KALT not returned any URL"
 
             #date, partnerID, channel_num, channel_name, DASH_KALT, DASH_KALT_BE, DASH_K_exit_msg, DASH_BRPK, DASH_B_exit_msg, HLS_KALT, HLS_KALT_BE, HLS_K_exit_msg, HLS_BRPK, HLS_B_exit_msg, DASH_K_payload, DASH_B_payload, HLS_K_payload, HLS_B_payload
