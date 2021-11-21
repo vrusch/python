@@ -54,6 +54,9 @@ dx['DASH'] = dx.apply(lambda row: row.dash_kalt + row.dash_brpk, axis=1)
 dx['HLS'] = dx.apply(lambda row: row.hls_kalt + row.hls_brpk, axis=1)
 all_channels = dx.channels.unique()
 
+dt_range = ''
+dt_min = ''
+dt_max = ''
 dt = dx[(dx['dates'] > '2021-11-20 14:00:00') & (dx['dates'] <= '2021-11-20 15:00:00')]
 #print(dt)
 
@@ -64,14 +67,17 @@ dt = dx[(dx['dates'] > '2021-11-20 14:00:00') & (dx['dates'] <= '2021-11-20 15:0
 
 
 
-
-
 dxv = dx[(dx.channels == 'RTS1HD')]
 print(dxv.nlargest(1, 'DASH'))
 print(dxv.nsmallest(1, 'DASH'))
 print(dxv["DASH"].mean())
 print(dxv["HLS"].mean())
 print(dxv["dash_kalt"].hasnans)
+print(dxv["dash_kalt_be"].hasnans)
+print(dxv["dash_brpk"].hasnans)
+print(dxv["hls_kalt"].hasnans)
+print(dxv["hls_kalt_be"].hasnans)
+print(dxv["hls_brpk"].hasnans)
 #print(dxv)
 
 #indexed_dx = dx.set_index(['channels'])
@@ -81,8 +87,8 @@ print(dxv["dash_kalt"].hasnans)
 mask = dx.channels.isin(dx.channels.unique())
 
 interpolation = 'linear' # linear, spline, vhv, hvh, vh, hv
-fig = px.line(dxv, x="dates", y=["DASH", "HLS", "dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
-#fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels', markers=True, line_shape=interpolation)
+#fig = px.line(dxv, x="dates", y=["DASH", "HLS", "dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
+fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels', markers=True, line_shape=interpolation)
 fig.show()
 
 '''

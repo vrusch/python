@@ -1,8 +1,8 @@
 import mysql.connector
 from numpy import NaN
 import pandas as pd
-from pandas.core import indexing
 import plotly.express as px
+import plotly.graph_objects as go
 
 #DB connect
 mydb = mysql.connector.connect(
@@ -28,20 +28,14 @@ hls_kalt_be = []
 hls_brpk = []
 
 for x in myresult:
-  dates.append(x[0])
+  dates.append(pd.to_datetime(x[0]))
   channels.append(x[1])
   dash_kalt.append(float(x[2]))
   dash_kalt_be.append(float(x[3]))
-  if x[4] == '':
-    dash_brpk.append(NaN)
-  else:
-    dash_brpk.append(float(x[4]))
+  dash_brpk.append(float(x[4]))
   hls_kalt.append(float(x[5]))
   hls_kalt_be.append(float(x[6]))
-  if x[7] == '':
-    hls_brpk.append(NaN)
-  else:
-    hls_brpk.append(float(x[7]))
+  hls_brpk.append(float(x[7]))
 
   data = {}
   data['dates'] = dates
@@ -52,12 +46,3 @@ for x in myresult:
   data['hls_kalt'] = hls_kalt
   data['hls_kalt_be'] = hls_kalt_be
   data['hls_brpk'] = hls_brpk
-
-#dx = pd.DataFrame(data)
-#all_channels = dx.channels.unique()
-#dx = dx[(dx.channels == 'RTS1HD') | (dx.channels == 'RTS2HD')]
-#sel_channels = dx.channels.unique()
-#mask = dx.channels.isin(dx.channels.unique())
-
-#fig = px.line(dx[mask], x="dates", y=["dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], color='channels', markers=True)
-#fig.show()

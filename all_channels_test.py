@@ -104,14 +104,14 @@ def func():
                     TIMEOUT = 0
                     logger.info("--> CONTINUE TEST FOR DASH -- STAGE BRPR")
                     try: 
-                        GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=7)
+                        GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=8)
                     except requests.exceptions.Timeout: 
                         TIMEOUT = 1
   
                     if TIMEOUT == 0:
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
-                            DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            DASH_B_elapsed = GETresponse.elapsed.total_seconds()
                             logger.info("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             DASH_B_exit_msg = "OK" 
                             DASH_B_payload = "Status code: "+str(get_responsecode) 
@@ -126,11 +126,11 @@ def func():
                             DASH_B_exit_msg = "ERROR"
                             DASH_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (7s)")
+                        logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (8s)")
                         logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"] URL: "+DASH_K_url)
                         DASH_B_elapsed = 'NaN'
                         DASH_B_exit_msg = 'ERROR'
-                        DASH_B_payload = 'GET REQUEST TIMEOUT (7s)'
+                        DASH_B_payload = 'GET REQUEST TIMEOUT (8s)'
 
                 else:
                     logger.error("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
@@ -183,14 +183,14 @@ def func():
                     TIMEOUT = 0
                     logger.info("--> CONTINUE TEST FOR HLS -- STAGE BRPR")
                     try: 
-                        GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=7)
+                        GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=8)
                     except requests.exceptions.Timeout: 
                         TIMEOUT = 1
                     
                     if TIMEOUT == 0:
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
-                            HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
+                            HLS_B_elapsed = GETresponse.elapsed.total_seconds()
                             logger.info("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             HLS_B_exit_msg = "OK" 
                             HLS_B_payload = "Status code: "+str(get_responsecode) 
@@ -205,11 +205,11 @@ def func():
                             HLS_B_exit_msg = "ERROR"
                             HLS_B_payload = "--BRPK not get Manifest. (wrong URL?) Reason: "+str(GETresponse.reason)+" Status code: "+str(get_responsecode) 
                     else:
-                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (7s)")
+                        logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] GET REQUEST TIMEOUT (8s)")
                         logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"] URL: "+HLS_K_url)
                         HLS_B_elapsed = 'NaN'
                         HLS_B_exit_msg = 'ERROR'
-                        HLS_B_payload = 'GET REQUEST TIMEOUT (7s)'  
+                        HLS_B_payload = 'GET REQUEST TIMEOUT (8s)'  
                              
                 else:
                     logger.error("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]ERROR: --KALT not returned any URL")
@@ -244,7 +244,7 @@ def func():
     dateX3 = dateX2 - dateX1
     logger.warning(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ str(dateX3) + ")")
 
-schedule.every(5).minutes.do(func)
+schedule.every(4).minutes.do(func)
   
 while True:
     schedule.run_pending()
