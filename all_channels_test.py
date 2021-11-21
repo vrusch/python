@@ -6,7 +6,7 @@ from KALT_config import *
 import logging
 import logging.handlers as handlers
 import csv
-#import http.client
+
 
 
 #specificke promenne pro test
@@ -42,8 +42,9 @@ ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[
 if ks == 'ERROR':
     logger.error("No login ks returned")
 else:
-    the_datetime = datetime. datetime. fromtimestamp(ks[3]) 
-    logger.warning("[LOGIN]KS EXPIRATION: " + str(the_datetime))
+    ks_exp = datetime. datetime.fromtimestamp(ks[3])
+    user_ks = ks[0] 
+    logger.warning("[LOGIN]KS EXPIRATION: " + str(ks_exp))
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logger.info("[LOGIN]User KS: " + ks[0])
@@ -60,15 +61,26 @@ def func():
             channelNumber = row[2]
             channelName = row[0]
             assetId = row[1]
-            logger.info("=============================================================================================")
+
+            #kontrola platnosti ks
+            '''
+            ks_exp_check = datetime.datetime.strptime(ks_exp, '%Y-%m-%d %H:%M:%S')
+            ks_exp_check = ks_exp_check - datetime.timedelta(minutes=15)
+            if datetime.datetime.now() >= ks_exp_check:
+                ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[2], phoenixURL, headerPOST)
+                logger.warning("[LOGIN]KS EXPIRE SOON, SO CHANGE IT")
+                logger.warning("[LOGIN]NEW KS EXPIRATION: " + str(ks_exp))
+                ks_exp = datetime. datetime.fromtimestamp(ks[3]) 
+                user_ks = ks[0]
+            '''
             logger.info("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
-            r = get_context(assetId, ks[0], headerPOST, phoenixURL)
+            r = get_context(assetId, user_ks, headerPOST, phoenixURL)
             responseDASH = r[0]
             responseHLS = r[1]
             RelapsedDASH = r[2]
             RelapsedHLS = r[3]
             RQdate = r[4]
-
+            
         ############################################################################################################################################ 
         #analyzeDASH -KALT
             logger.info("--> Start analyze DASH")
@@ -118,7 +130,7 @@ def func():
                         else:
                             #DASH_B_elapsed = GETresponse.elapsed.microseconds/1000000
                             DASH_B_elapsed = 'NaN'
-                            logger.error(str(GETresponse.content))
+                            logger.error("[ERROR][DASH][BRPK]Response: "+str(GETresponse.content))
                             logger.error("[ERROR][DASH][BRPK]URL: "+DASH_K_url)
                             logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))
@@ -197,7 +209,7 @@ def func():
                         else:
                             #HLS_B_elapsed = GETresponse.elapsed.microseconds/1000000
                             HLS_B_elapsed = 'NaN'
-                            logger.error(str(GETresponse.content))
+                            logger.error("[ERROR][HLS][BRPK]Response: "+str(GETresponse.content))
                             logger.error("[ERROR][HLS][BRPK]URL: "+HLS_K_url)
                             logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             logger.error("[ERROR][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response status code: "+str(get_responsecode))

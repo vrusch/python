@@ -140,8 +140,8 @@ def KALT_ks(apiVersion, partnerID, username, password, udid, phoenixURL, header)
         login_ks = json_response['result']['loginSession']['ks']
         Relapsed = (response.elapsed.microseconds)/1000000
         BEexecutionTime = json_response['executionTime']
-        epoch = json_response['result']['loginSession']['expiry']
-        return login_ks, Relapsed, BEexecutionTime, epoch
+        ks_exp = json_response['result']['loginSession']['expiry']
+        return login_ks, Relapsed, BEexecutionTime, ks_exp
     except:
         #doplnit telo error msg a vratit
         return 'ERROR'

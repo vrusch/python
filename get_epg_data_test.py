@@ -6,9 +6,9 @@ import csv
 import logging.handlers as handlers
 
 logger = logging.getLogger('my_app')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('./log/epg_data_test.log', maxBytes=50500500, backupCount=4)
-logHandler.setLevel(logging.DEBUG)
+logHandler.setLevel(logging.ERROR)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
@@ -153,10 +153,10 @@ with open(inputfile, 'r') as csvfile:
             print(sdate)
             print(edate)
         
-            logger.info("Name: "+pname)
-            logger.info("previous end: "+oedate+" : "+str(oetime_stamp))
-            logger.info("START: ==> "+sdate+" : "+str(stime_stamp))
-            logger.info("END: <== "+edate+" : "+str(etime_stamp))
+            logger.debug("Name: "+pname)
+            logger.debug("previous end: "+oedate+" : "+str(oetime_stamp))
+            logger.debug("START: ==> "+sdate+" : "+str(stime_stamp))
+            logger.debug("END: <== "+edate+" : "+str(etime_stamp))
             if oedate == sdate:
                 print("STATUS OK")
                 logger.info("STATUS OK")
@@ -166,6 +166,10 @@ with open(inputfile, 'r') as csvfile:
             else:
                 print("error")
                 logger.error("ERROR ==== wrong items")
+                logger.error("Name: "+pname)
+                logger.error("previous end: "+oedate+" : "+str(oetime_stamp))
+                logger.error("START: ==> "+sdate+" : "+str(stime_stamp))
+                logger.error("END: <== "+edate+" : "+str(etime_stamp))
                 chyby_poc = chyby_poc + 1
                 if channelName not in chyby:
                     chyby[channelName] = {}
@@ -188,10 +192,9 @@ print("´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´�
 print("gaps or overlaps in the EPG: "+str(chyby_poc))
 print (json.dumps(chyby, indent=4))
 
-logger.info("=== END ====")
-logger.info("suspicious EPG (less than 10 items): "+str(pod_chyby_poc))
-logger.info (str(chyby_pod))
-logger.info("")
-logger.info("")
-logger.info("gaps or overlaps in the EPG: "+str(chyby_poc))
-logger.info (str(json.dumps(chyby, indent=4)))
+logger.error("=== END ====")
+logger.error(json.dumps(chyby, indent=4))
+logger.error("suspicious EPG (less than 10 items): "+str(pod_chyby_poc))
+logger.error (chyby_pod)
+logger.error("+++++++++++++++++++++++++++++++++++++++++++++++++++")
+logger.error("gaps or overlaps in the EPG: "+str(chyby_poc))
