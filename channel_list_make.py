@@ -14,7 +14,7 @@ if partnerID == "3200":
     username = "monitoring4_rs" 
     password = "#-K_monitoring4_rs" 
     idEqual = 354085
-    outputcsv = "opc_tlrs1.csv"
+    outputcsv = "opc_tlrs.csv"
 elif partnerID == "3201":
     header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp1.ott.kaltura.com', 'Accept' : '*/*', 
             'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'}
