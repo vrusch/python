@@ -1,13 +1,6 @@
 
 import requests
 import json
-import dash
-from dash import dcc
-from dash import html
-from dash.dependencies import Input, Output
-import plotly.express as px
-import dash_bootstrap_components as dbc
-from dash_bootstrap_templates import load_figure_template
 
 
 
@@ -41,31 +34,24 @@ BEexecutionTime = json_response['executionTime']
 epoch = json_response['result']['loginSession']['expiry']
 
 
-servis = "/asset/action/getPlaybackContext"
-dataDASH = {
-            "assetId": '800398',
-            "assetType": "media",
-            "contextDataParams": {
-                "objectType": "KalturaPlaybackContextOptions",
-                "streamerType": "mpegdash",
-                "context": "PLAYBACK",
-                "urlType": "DIRECT",
-                "mediaProtocol": "https"
+servis = "/asset/action/list"
+data = {
+        "clientTag": "KUX",
+        "language": "srp",
+        "apiVersion": apiVersion,
+        "ks": login_ks,
+        "filter": {
+            "objectType": "KalturaChannelFilter",
+            "kSql": "(and (and asset_type=601))",
+            "idEqual": 354085
             },
-            "ks": login_ks,
-            "clientTag": clientTag,
-            "language": language,
-            "apiVersion": apiVersion
+        "pager": {
+        "objectType": "KalturaFilterPager",
+        "pageSize": 200,
+        "pageIndex": 1
+         }
         }
-sendDASH = phoenixURL + servis
-
-response = ''
-try:
-    response = requests.post(sendDASH, json.dumps(dataDASH), timeout= 2, headers=headerPOST)
-    responseDASH = response.json()
-    print(responseDASH)
-    RelapsedDASH =  (responseDASH.elapsed.microseconds)/1000000
-except:
-    print('exe')
-
-help(dcc.Dropdown)
+send = phoenixURL + servis
+response = requests.post(send, json.dumps(data), headers=headerPOST)
+responsejson = response.json()
+print(responsejson)
