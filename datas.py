@@ -16,7 +16,7 @@ mycursor = mydb.cursor()
 sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
-print("Zaznamu nacteno z DB: "+str(len(myresult)))
+#print("Zaznamu nacteno z DB: "+str(len(myresult)))
 
 dates = []
 channels = []
