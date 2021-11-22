@@ -53,6 +53,10 @@ dx = pd.DataFrame(data)
 dx['DASH'] = dx.apply(lambda row: row.dash_kalt + row.dash_brpk, axis=1)
 dx['HLS'] = dx.apply(lambda row: row.hls_kalt + row.hls_brpk, axis=1)
 all_channels = dx.channels.unique()
+print(dx.nlargest(5, columns = ['HLS']))
+print(dx.nlargest(5, columns = ['DASH']))
+print()
+print()
 
 dt_range = ''
 dt_min = ''
@@ -68,6 +72,7 @@ dt = dx[(dx['dates'] > '2021-11-20 14:00:00') & (dx['dates'] <= '2021-11-20 15:0
 
 
 dxv = dx[(dx.channels == 'RTS1HD')]
+'''
 print(dxv.nlargest(1, 'DASH'))
 print(dxv.nsmallest(1, 'DASH'))
 print(dxv["DASH"].mean())
@@ -79,7 +84,7 @@ print(dxv["hls_kalt"].hasnans)
 print(dxv["hls_kalt_be"].hasnans)
 print(dxv["hls_brpk"].hasnans)
 #print(dxv)
-
+'''
 #indexed_dx = dx.set_index(['channels'])
 
 

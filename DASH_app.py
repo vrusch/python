@@ -10,9 +10,12 @@ from datas import *
 load_figure_template("cyborg")
 
 df = px.data.gapminder()
+all_continents = df.continent.unique()
+
+
 dx = pd.DataFrame(data)
 all_channels = dx.channels.unique()
-all_continents = df.continent.unique()
+
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
