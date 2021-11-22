@@ -8,7 +8,6 @@ import logging.handlers as handlers
 import csv
 
 
-
 #specificke promenne pro test
 partnerID = '3200'
 inputfile = "opc_tlrs.csv"
@@ -31,7 +30,7 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 #ziskani credentials a API hlavicek, phoenixURL
-credentials = user_login(partnerID, 4)
+credentials = user_login(partnerID, 3)
 head = headers(partnerID)
 headerPOST = head[0]
 headerGET = head[1]
@@ -44,6 +43,7 @@ if ks == 'ERROR':
 else:
     ks_exp = datetime. datetime.fromtimestamp(ks[3])
     user_ks = ks[0] 
+    logger.warning("[LOGIN]USES USER: " + str(credentials[0]))
     logger.warning("[LOGIN]KS EXPIRATION: " + str(ks_exp))
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
@@ -85,6 +85,7 @@ def func():
         #analyzeDASH -KALT
             logger.info("--> Start analyze DASH")
             if responseDASH != None:
+                responseDASHraw = responseDASH
                 responseDASH = responseDASH.json()
                 DASH_K_BE_execTime = responseDASH['executionTime']
                 try:
@@ -95,7 +96,7 @@ def func():
                     DASH_kalt_reason = True
                 except:
                     if responseDASH['result']:
-                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + responseDASH)
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + str(responseDASHraw.content))
                         Etype = responseDASH['result']['actions'][0]['type']
                         Emsg = responseDASH['result']['messages'][0]['message']
                         DASH_K_exit_msg = "ERROR"
@@ -165,6 +166,7 @@ def func():
         #analyzeHLS: -KALT
             logger.info("--> Start analyze HLS")
             if responseHLS != None:
+                responseHLSraw = responseHLS
                 responseHLS = responseHLS.json()
                 HLS_K_BE_execTime = responseHLS['executionTime']
                 try:
@@ -175,7 +177,7 @@ def func():
                     HLS_kalt_reason = True
                 except:
                     if responseHLS['result']:
-                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + responseHLS)
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + str(responseHLSraw.content))
                         Etype = responseHLS['result']['actions'][0]['type']
                         Emsg = responseHLS['result']['messages'][0]['message']
                         HLS_K_exit_msg = "ERROR"
