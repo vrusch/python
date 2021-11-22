@@ -72,9 +72,12 @@ def func():
             if datetime.datetime.now() >= ks_exp_check:
                 logger.warning("[LOGIN]KS EXPIRE SOON, SO CHANGE IT")
                 logger.warning("[LOGIN]NEW KS EXPIRATION: " + str(ks_exp))
+                logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
                 ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[2], phoenixURL, headerPOST)
                 ks_exp = datetime.datetime.fromtimestamp(ks[3]) 
                 user_ks = ks[0]
+                ks_exp_check = ks_exp - datetime.timedelta(hours=23)
+                logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
 
             logger.info("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
             r = get_context(assetId, user_ks, headerPOST, phoenixURL)
