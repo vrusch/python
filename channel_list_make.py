@@ -14,7 +14,7 @@ if partnerID == "3200":
     username = "monitoring4_rs" 
     password = "#-K_monitoring4_rs" 
     idEqual = 354085
-    outputcsv = "opc_tlrs.csv"
+    outputcsv = "opc_tlrs1.csv"
 elif partnerID == "3201":
     header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp1.ott.kaltura.com', 'Accept' : '*/*', 
             'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'}
@@ -92,7 +92,7 @@ except:
     
 
 #vyloucit kanaly ktere maji v mene
-vyloucit_ch = ("Cetin", "Africkenebe", "InsajderTV", 'VHram', 'TVMELOS', 'NasaTV', 'RTCGSAT', 'KTVZrenjanin', )
+vyloucit_ch = ("Cetin", "blabla")
 vyloucit_poc = 0
 chan_out = []
 
@@ -121,7 +121,6 @@ if total_count > 0:
         logging.info("channel ID: " +str(channel_id))
         channel_metas = channel['metas']
         if 'ChannelNumber' in channel_metas:
-            
             channel_number = (channel['metas']['ChannelNumber']['value'])
             channel_number = str(channel_number)
             logging.info("puvodni channel #: " +channel_number)
@@ -131,7 +130,6 @@ if total_count > 0:
                 channel_number = "0" + channel_number
             print(channel_number)
             logging.info("upravene channel #: " +channel_number)
-            
             channel_mediafiles = channel['mediaFiles']
             print(len(channel_mediafiles))
             logging.info("channel #: " +channel_number + " " + channel_name +" have "+str(len(channel_mediafiles))+" media files: ")
@@ -145,12 +143,17 @@ if total_count > 0:
                 vyloucit_poc = vyloucit_poc +1 
                 chan_out.append((channel_name,channel_number))
                 logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze je v mnozine nezadoucich")
+            elif channel['status'] == False :
+                vyloucit_poc = vyloucit_poc +1 
+                chan_out.append((channel_name,channel_number))
+                logging.error("channel #: " +channel_number + " " + channel_name +" byl vyhozeny protoze status je FALSE")
             else:
                 sentense = channel_name + ";" + str(channel_id) + ";" + str(channel_number) + "\n"
                 poc = poc + 1
                 f = open(outputcsv, "a")
                 f.write(sentense)
                 f.close()
+                logging.info("channel #: " +channel_number + " " + channel_name +" status: " + str(channel['status']))
                 logging.info("channel #: " +channel_number + " " + channel_name +" byl zapsan do csv")
         else:
             print("NONE")
