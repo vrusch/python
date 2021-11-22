@@ -95,6 +95,7 @@ def func():
                     DASH_kalt_reason = True
                 except:
                     if responseDASH['result']:
+                        logger.error("[ERROR][DASH][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + responseDASH)
                         Etype = responseDASH['result']['actions'][0]['type']
                         Emsg = responseDASH['result']['messages'][0]['message']
                         DASH_K_exit_msg = "ERROR"
@@ -174,6 +175,7 @@ def func():
                     HLS_kalt_reason = True
                 except:
                     if responseHLS['result']:
+                        logger.error("[ERROR][HLS][KALT]["+channelName+"]["+channelNumber+"]ERROR response" + responseHLS)
                         Etype = responseHLS['result']['actions'][0]['type']
                         Emsg = responseHLS['result']['messages'][0]['message']
                         HLS_K_exit_msg = "ERROR"
