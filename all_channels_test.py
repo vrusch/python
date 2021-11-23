@@ -24,7 +24,7 @@ mydb = mysql.connector.connect(
 logger = logging.getLogger('TLRS_avia_app')
 logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('./log/TLRS_availability_channel_test.log', maxBytes=5242880, backupCount=5)
-logHandler.setLevel(logging.INFO)
+logHandler.setLevel(logging.WARNING)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
@@ -43,7 +43,7 @@ if ks == 'ERROR':
 else:
     ks_exp = datetime. datetime.fromtimestamp(ks[3])
     user_ks = ks[0] 
-    ks_exp_check = ks_exp - datetime.timedelta(hours=23)
+    ks_exp_check = ks_exp - datetime.timedelta(hours=2)
     logger.warning("[LOGIN]USES USER: " + str(credentials[0]))
     logger.warning("[LOGIN]KS EXPIRATION: " + str(ks_exp))
     logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
@@ -68,14 +68,14 @@ def func():
             global ks_exp
             global user_ks
             #ks_exp_check = datetime.datetime.strptime(ks_exp, '%Y-%m-%d %H:%M:%S')
-            ks_exp_check = ks_exp - datetime.timedelta(hours=23)
-            if datetime.datetime.now() >= ks_exp_check:
+            ks_exp_check = ks_exp - datetime.timedelta(hours=2)
+            if datetime.datetime.now() > ks_exp_check:
                 logger.warning("[LOGIN]KS EXPIRE SOON, SO CHANGE IT")
                 logger.warning("[LOGIN]NEW KS EXPIRATION: " + str(ks_exp))
                 ks = KALT_ks(apiVersion, partnerID, credentials[0], credentials[1], credentials[2], phoenixURL, headerPOST)
                 ks_exp = datetime.datetime.fromtimestamp(ks[3]) 
                 user_ks = ks[0]
-                ks_exp_check = ks_exp - datetime.timedelta(hours=23)
+                ks_exp_check = ks_exp - datetime.timedelta(hours=2)
                 logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
 
             logger.info("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
