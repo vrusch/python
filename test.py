@@ -13,13 +13,12 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 dx = pd.DataFrame(data)
 all_channels = dx.channels.unique()
 dd = dx['dates']
-print(dd)
+#print(dd)
 
 dates = ['03-02-2021', '03-03-2021', '03-04-2021', '03-05-2021', '03-06-2021', '03-07-2021']
 mytotaldates = {i:datetime.strptime(x, "%m-%d-%Y").date() for i,x in enumerate(dates)}
 a = (list(mytotaldates.keys()))
-print(mytotaldates)
-
+#print(mytotaldates)
 
 app.layout = html.Div(children=[ 
     html.H1("Dash Bootstrap Template Demo", className="bg-primary text-white p-2"), 
@@ -33,7 +32,6 @@ app.layout = html.Div(children=[
     html.Div(id='OutputContainer'),
     dcc.Graph(id="line-chart")
 ])
-
 
 @app.callback(
     Output('OutputContainer', 'children'),

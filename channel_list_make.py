@@ -1,6 +1,7 @@
 import requests
 import json
 import logging
+import os
 
 
 partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
@@ -42,6 +43,12 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, filename="./log/make_channel_list_log.log", filemode="a+",
                         format="%(asctime)-1s %(levelname)-0.5s %(message)s")
 logging.info("hello")
+
+if os.path.exists(outputcsv):
+  os.remove(outputcsv)
+  logging.info("The output file exist removed!")
+else:
+  logging.info("The output file does not exist")
 
 
 #login ks
