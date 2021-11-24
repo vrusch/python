@@ -8,7 +8,7 @@ form_data = {
     "foo1":"bar1",
     "foo2":"bar2"
 }
-list_of_req = [("https://postman-echo.com/post",form_data)]*50
+list_of_req = [("https://postman-echo.com/post",form_data)]*10
 
 
 with ThreadPoolExecutor(max_workers=50) as pool:

@@ -265,7 +265,7 @@ def func():
     dateX3 = dateX2 - dateX1
     logger.warning(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ str(dateX3) + ")")
 
-schedule.every(4).minutes.do(func)
+schedule.every(5).seconds.do(func)
   
 while True:
     schedule.run_pending()
