@@ -19,10 +19,10 @@ def main():
   
       while True:
             schedule.run_pending()
-            #time.sleep(1)
+            time.sleep(1)
 
 if __name__ == '__main__':
-      myname='TLRS-test_d'
+      myname=os.path.basename(sys.argv[0])
       pidfile='/tmp/%s' % myname       # any name
       daemon = Daemonize(app=myname,pid=pidfile, action=main)
       daemon.start()
