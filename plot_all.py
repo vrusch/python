@@ -62,19 +62,10 @@ print()
 print(dx["HLS"].mean())
 print(dx["DASH"].mean())
 
-dt_range = ''
-dt_min = ''
-dt_max = ''
+
 dt = dx[(dx['dates'] > '2021-11-20 14:00:00') & (dx['dates'] <= '2021-11-20 15:00:00')]
-#print(dt)
-#print(dx.nlargest(1, 'DASH'))
-#print(dx.nsmallest(1, 'DASH'))
-#print(dx ["DASH"].mean())
-#print(dx ["HLS"].mean())
 
-
-
-dxv = dx[(dx.channels == 'RTS1HD')]
+dxs = dx[(dx.channels == 'RTS1HD')]
 '''
 print(dxv.nlargest(1, 'DASH'))
 print(dxv.nsmallest(1, 'DASH'))
@@ -95,6 +86,6 @@ print(dxv["hls_brpk"].hasnans)
 mask = dx.channels.isin(dx.channels.unique())
 
 interpolation = 'linear' # linear, spline, vhv, hvh, vh, hv
-#fig = px.line(dxv, x="dates", y=["DASH", "HLS", "dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
-fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels', markers=True, line_shape=interpolation)
+fig = px.line(dxs, x="dates", y=["DASH", "HLS", "dash_kalt", "dash_kalt_be", "dash_brpk", "hls_kalt", "hls_kalt_be", "hls_brpk"], markers=True, line_shape=interpolation)
+#fig = px.line(dx[mask], x="dates", y=["DASH", "HLS"], color='channels', markers=True, line_shape=interpolation)
 fig.show()
