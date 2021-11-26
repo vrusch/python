@@ -1,7 +1,7 @@
 import requests
 import hashlib
 
-partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3204" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 apiVersion = "5.3.5"
 
 
@@ -15,8 +15,8 @@ elif partnerID == "3201":
         token = "none"
 elif partnerID == "3204":
         bu = 'TLHU'
-        token_id = "c2759f4f10494c428399ee36f27650d6"
-        token = "ef39b6258189408db31dbab1477740cb"
+        token_id = "80c88e85087c413b9c56078616621a6f"
+        token = "1f45e78846e54374a41b6f4784ebd3ec"
 elif partnerID == "3206":
         bu = 'O2SK'
         token_id = "aed7d414b5cb4638ac74d61d9adf1eab"
