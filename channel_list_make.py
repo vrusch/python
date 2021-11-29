@@ -4,7 +4,7 @@ import logging
 import os
 
 
-partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 phoenixURL = "https://" + partnerID + ".frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 
@@ -15,15 +15,19 @@ if partnerID == "3200":
     username = "monitoring4_rs" 
     password = "#-K_monitoring4_rs" 
     idEqual = 354085
+    assettype = 601
     outputcsv = "opc_tlrs.csv"
+    log="./log/makeTLRS_channel_list_log.log"
 elif partnerID == "3201":
     header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp1.ott.kaltura.com', 'Accept' : '*/*', 
             'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'}
-    udid = "monitoring1_cz" 
-    username = "monitoring1_cz@cetin.cz" 
-    password = "#-K_monitoring1_cz" 
+    udid = "monitoring2_cz" 
+    username = "monitoring2_cz@cetin.cz" 
+    password = "#-K_monitoring2_cz" 
     idEqual = 354336
-    outputcsv = "opc_O2cz.csv"
+    assettype = 607
+    outputcsv = "opc_o2cz.csv"
+    log="./log/makeO2cz_channel_list_log.log"
 
 
 #send request function
@@ -40,7 +44,7 @@ def sendRequest (servis, data):
 
 #logging
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, filename="./log/make_channel_list_log.log", filemode="a+",
+    logging.basicConfig(level=logging.DEBUG, filename=log, filemode="a+",
                         format="%(asctime)-1s %(levelname)-0.5s %(message)s")
 logging.info("hello")
 
@@ -76,7 +80,7 @@ data = {
         "ks": login_ks,
         "filter": {
             "objectType": "KalturaChannelFilter",
-            "kSql": "(and (and asset_type=601))",
+            "kSql": "(and (and asset_type="+str(assettype)+"))",
             "idEqual": idEqual
             },
         "pager": {
@@ -120,6 +124,11 @@ if total_count > 0:
         channel_name = channel_name.replace("Č", "C")
         channel_name = channel_name.replace("č", "c")
         channel_name = channel_name.replace("Ó", "O")
+        channel_name = channel_name.replace("+", "_")
+        channel_name = channel_name.replace("ň", "n")
+        channel_name = channel_name.replace("Š", "S")
+        channel_name = channel_name.replace("á", "a")
+        channel_name = channel_name.replace("ž", "z")
         channel_name = ''.join(channel_name.split())
         print(channel_name)
         logging.info("upravene jmeno: " +channel_name)
