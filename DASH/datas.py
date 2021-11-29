@@ -1,8 +1,8 @@
 import mysql.connector
 from numpy import NaN
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+import datetime
+
 
 #DB connect
 mydb = mysql.connector.connect(
@@ -13,10 +13,12 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr"
+last24h = datetime.datetime.now() - datetime.timedelta(hours=24)
+
+sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr WHERE date > '"+str(last24h)+"'"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
-#print("Zaznamu nacteno z DB: "+str(len(myresult)))
+print("Zaznamu nacteno z DB: "+str(len(myresult)))
 
 dates = []
 channels = []
