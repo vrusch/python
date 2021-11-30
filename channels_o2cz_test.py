@@ -24,7 +24,7 @@ mydb = mysql.connector.connect(
 logger = logging.getLogger('O2cz_avia_app')
 logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('./log/O2CZ_availability_channel_test.log', maxBytes=5242880, backupCount=5)
-logHandler.setLevel(logging.WARNING)
+logHandler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
