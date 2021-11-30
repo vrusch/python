@@ -4,7 +4,7 @@ import logging
 import os
 
 
-partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 phoenixURL = "https://" + partnerID + ".frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 
@@ -18,6 +18,7 @@ if partnerID == "3200":
     assettype = 601
     outputcsv = "opc_tlrs.csv"
     log="./log/makeTLRS_channel_list.log"
+    vyloucit_ch = ("Cetin", "blabla")
 elif partnerID == "3201":
     header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp1.ott.kaltura.com', 'Accept' : '*/*', 
             'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'}
@@ -28,6 +29,9 @@ elif partnerID == "3201":
     assettype = 607
     outputcsv = "opc_o2cz.csv"
     log="./log/makeO2cz_channel_list.log"
+    vyloucit_ch = ("Cetin", "blabla" , "RadioBonton", "DanceRadio", "ClassicFM", "Expresradio",
+    "Radio1", "RadioBeat", "CountryRadio", "Frekvence1", "Evropa2", "RadioImpuls", "CRoJazz", "CRoRadiozurnalSport",
+    "CRoPlus", "CRoD-dur", "CRoJunior", "CRoRadioWave", "CRoVltava", "CRoDvojka", "CRoRadiozurnal")
 
 
 #send request function
@@ -103,7 +107,6 @@ except:
     
 
 #vyloucit kanaly ktere maji v mene
-vyloucit_ch = ("Cetin", "blabla")
 vyloucit_poc = 0
 chan_out = []
 
