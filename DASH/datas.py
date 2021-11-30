@@ -16,7 +16,7 @@ mycursor = mydb.cursor()
 last24h = datetime.datetime.now() - datetime.timedelta(hours=24)
 
 #sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr WHERE date > '"+str(last24h)+"'"
-sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr"
+sql = "SELECT date, channel_name, DASH_KALT, DASH_KALT_BE, DASH_BRPK, HLS_KALT, HLS_KALT_BE, HLS_BRPK FROM mydatabase.channel_test_upr WHERE partnerID = '3200';"
 mycursor.execute(sql)
 myresult = mycursor.fetchall()
 print("Zaznamu nacteno z DB: "+str(len(myresult)))

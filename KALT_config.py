@@ -36,7 +36,7 @@ def user_login(partnerID, user):
 
     elif partnerID == "3201":
         if user == 1:
-            udid = "monitoring1_cz" 
+            udid = "monitoring111_cz" 
             username = "monitoring1_cz@cetin.cz" 
             password = "#-K_monitoring1_cz"
         elif user == 2:

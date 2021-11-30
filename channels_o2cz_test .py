@@ -9,8 +9,8 @@ import csv
 
 
 #specificke promenne pro test
-partnerID = '3200'
-inputfile = "opc_tlrs.csv"
+partnerID = '3201'
+inputfile = "opc_o2cz.csv"
 
 #DB connect
 mydb = mysql.connector.connect(
@@ -21,16 +21,16 @@ mydb = mysql.connector.connect(
 )
 
 #logovani a rotovani logu
-logger = logging.getLogger('TLRS_avia_app')
+logger = logging.getLogger('O2cz_avia_app')
 logger.setLevel(logging.INFO)
-logHandler = handlers.RotatingFileHandler('./log/TLRS_availability_channel_test.log', maxBytes=5242880, backupCount=5)
+logHandler = handlers.RotatingFileHandler('./log/O2CZ_availability_channel_test.log', maxBytes=5242880, backupCount=5)
 logHandler.setLevel(logging.WARNING)
 formatter = logging.Formatter("%(asctime)-0s %(levelname)-0s %(message)s")
 logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 
 #ziskani credentials a API hlavicek, phoenixURL
-credentials = user_login(partnerID, 4)
+credentials = user_login(partnerID, 1)
 head = headers(partnerID)
 headerPOST = head[0]
 headerGET = head[1]
@@ -46,10 +46,12 @@ else:
     ks_exp_check = ks_exp - datetime.timedelta(hours=2)
     logger.warning("[LOGIN]USES USER: " + str(credentials[0]))
     logger.warning("[LOGIN]KS EXPIRATION: " + str(ks_exp))
+    logger.warning("[LOGIN]KS : " + str(user_ks))
     logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
     logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
     logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
     logger.info("[LOGIN]User KS: " + ks[0])
+
 
 def func():
     dateX1 =  datetime.datetime.now()

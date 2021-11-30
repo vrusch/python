@@ -17,7 +17,7 @@ if partnerID == "3200":
     idEqual = 354085
     assettype = 601
     outputcsv = "opc_tlrs.csv"
-    log="./log/makeTLRS_channel_list_log.log"
+    log="./log/makeTLRS_channel_list.log"
 elif partnerID == "3201":
     header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp1.ott.kaltura.com', 'Accept' : '*/*', 
             'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'}
@@ -27,7 +27,7 @@ elif partnerID == "3201":
     idEqual = 354336
     assettype = 607
     outputcsv = "opc_o2cz.csv"
-    log="./log/makeO2cz_channel_list_log.log"
+    log="./log/makeO2cz_channel_list.log"
 
 
 #send request function
