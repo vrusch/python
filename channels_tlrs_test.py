@@ -44,17 +44,16 @@ else:
     ks_exp = datetime. datetime.fromtimestamp(ks[3])
     user_ks = ks[0] 
     ks_exp_check = ks_exp - datetime.timedelta(hours=2)
-    logger.warning("[LOGIN]USES USER: " + str(credentials[0]))
-    logger.warning("[LOGIN]KS EXPIRATION: " + str(ks_exp))
-    logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
-    logger.info("[LOGIN]BE execution Time: "+str(ks[2]))
-    logger.info("[LOGIN]Elapsed Time: "+str(ks[1]))
-    logger.info("[LOGIN]User KS: " + ks[0])
+    logger.info("[LOGIN]USES USER: " + str(credentials[0]))
+    logger.info("[LOGIN]KS EXPIRATION: " + str(ks_exp))
+    logger.info("[LOGIN]KS : " + str(user_ks))
+    logger.info("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
+
 
 def func():
     dateX1 =  datetime.datetime.now()
     dateX1a =  dateX1.strftime("%Y-%m-%d %H:%M:%S")
-    logger.warning(" -> TEST ROUND START AT: " + dateX1a)
+    logger.info(" -> TEST ROUND START AT: " + dateX1a)
 
     #otevrit csv a vrati stream
     with open(inputfile, 'r') as csvfile:
@@ -78,7 +77,7 @@ def func():
                 ks_exp_check = ks_exp - datetime.timedelta(hours=2)
                 logger.warning("[LOGIN]KS CHANGE AT: " + str(ks_exp_check))
 
-            logger.info("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
+            logger.debug("[TEST]Start test for channel name: " + channelName + " #" + channelNumber + " with ID: " + assetId)
             r = get_context(assetId, user_ks, headerPOST, phoenixURL)
             responseDASH = r[0]
             responseHLS = r[1]
@@ -88,7 +87,7 @@ def func():
             
         ############################################################################################################################################ 
         #analyzeDASH -KALT
-            logger.info("--> Start analyze DASH")
+            logger.debug("--> Start analyze DASH")
             if responseDASH != None:
                 responseDASHraw = responseDASH
                 responseDASH = responseDASH.json()
@@ -97,7 +96,7 @@ def func():
                     DASH_K_url = responseDASH['result']['sources'][0]['url']
                     DASH_K_exit_msg = "OK"
                     DASH_K_payload = DASH_K_url
-                    logger.info("[RESULT][DASH][KALT]["+channelName+"]["+channelNumber+"] OK --KALT returned URL")
+                    logger.debug("[RESULT][DASH][KALT]["+channelName+"]["+channelNumber+"] OK --KALT returned URL")
                     DASH_kalt_reason = True
                 except:
                     if responseDASH['result']:
@@ -121,7 +120,7 @@ def func():
                 #analyzeDASH -BRPK
                 if DASH_kalt_reason:
                     TIMEOUT = 0
-                    logger.info("--> CONTINUE TEST FOR DASH -- STAGE BRPR")
+                    logger.debug("--> CONTINUE TEST FOR DASH -- STAGE BRPR")
                     try: 
                         GETresponse = requests.get(DASH_K_url, headers=headerGET, timeout=8)
                     except requests.exceptions.Timeout: 
@@ -131,7 +130,7 @@ def func():
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
                             DASH_B_elapsed = GETresponse.elapsed.total_seconds()
-                            logger.info("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.debug("[RESULT][DASH][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             DASH_B_exit_msg = "OK" 
                             DASH_B_payload = "Status code: "+str(get_responsecode) 
                         else:
@@ -169,7 +168,7 @@ def func():
 
         ############################################################################################################################################  
         #analyzeHLS: -KALT
-            logger.info("--> Start analyze HLS")
+            logger.debug("--> Start analyze HLS")
             if responseHLS != None:
                 responseHLSraw = responseHLS
                 responseHLS = responseHLS.json()
@@ -178,7 +177,7 @@ def func():
                     HLS_K_url = responseHLS['result']['sources'][0]['url']
                     HLS_K_exit_msg = "OK"
                     HLS_K_payload = HLS_K_url
-                    logger.info("[RESULT][HLS][KALT]["+channelName+"]["+channelNumber+"] OK --KALT returned URL")
+                    logger.debug("[RESULT][HLS][KALT]["+channelName+"]["+channelNumber+"] OK --KALT returned URL")
                     HLS_kalt_reason = True
                 except:
                     if responseHLS['result']:
@@ -202,7 +201,7 @@ def func():
                 #analyzeHLS -BRPK
                 if HLS_kalt_reason:
                     TIMEOUT = 0
-                    logger.info("--> CONTINUE TEST FOR HLS -- STAGE BRPR")
+                    logger.debug("--> CONTINUE TEST FOR HLS -- STAGE BRPR")
                     try: 
                         GETresponse = requests.get(HLS_K_url, headers=headerGET, timeout=8)
                     except requests.exceptions.Timeout: 
@@ -212,7 +211,7 @@ def func():
                         get_responsecode = GETresponse.status_code
                         if get_responsecode == 200:
                             HLS_B_elapsed = GETresponse.elapsed.total_seconds()
-                            logger.info("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
+                            logger.debug("[RESULT][HLS][BRPK]["+channelName+"]["+channelNumber+"]Response reason: "+str(GETresponse.reason))
                             HLS_B_exit_msg = "OK" 
                             HLS_B_payload = "Status code: "+str(get_responsecode) 
                         else:
@@ -256,14 +255,14 @@ def func():
             mycursor.execute(sql, val)
             mydb.commit()
             lastID = mycursor.lastrowid
-            logger.info("1 record inserted, ID:" + str(lastID))
-            logger.info("Values:" + str(val))
+            logger.debug("1 record inserted, ID:" + str(lastID))
+            logger.debug("Values:" + str(val))
             RQdate = ""
 
     dateX2 =  datetime.datetime.now()
     dateX2a =  dateX2.strftime("%Y-%m-%d %H:%M:%S")
     dateX3 = dateX2 - dateX1
-    logger.warning(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ str(dateX3) + ")")
+    logger.info(" <- TEST ROUND STOP AT: " + dateX2a + " (lap time: "+ str(dateX3) + ")")
 
 schedule.every(5).seconds.do(func)
   
