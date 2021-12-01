@@ -54,7 +54,7 @@ logging.info("hello")
 
 if os.path.exists(outputcsv):
   os.remove(outputcsv)
-  logging.info("The output file exist removed!")
+  logging.warning("The output file exist removed!")
 else:
   logging.info("The output file does not exist")
 
