@@ -2,7 +2,7 @@ import schedule
 import time
   
 def func():
-    print("Geeksforgeeks")
+    print("something")
   
 schedule.every(1).minutes.do(func)
   
