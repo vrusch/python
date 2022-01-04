@@ -113,6 +113,11 @@ with open(inputfile, 'r') as csvfile:
         with open(kalt_f_name, "w") as w:
             w.write(text)
             w.close()
+        with open(kalt_f_name) as r:
+            text = r.read().replace("YY-YY", longKS)
+        with open(kalt_f_name, "w") as w:
+            w.write(text)
+            w.close()
         print("file --> " + kalt_f_name + "  was edit")
         logging.info("file --> " + kalt_f_name + "  was edit")
 
@@ -195,6 +200,11 @@ with open(inputfile, 'r') as csvfile:
         #open file, find string replace it BRPK
         with open(brpk_f_name) as r1:
             text1 = r1.read().replace("XXXX", ("channel_"+chanel_nu+"_"+chanel_na))
+        with open(brpk_f_name, "w") as w1:
+            w1.write(text1)
+            w1.close()
+        with open(brpk_f_name) as r1:
+            text1 = r1.read().replace("YY-YY", longKS)
         with open(brpk_f_name, "w") as w1:
             w1.write(text1)
             w1.close()
