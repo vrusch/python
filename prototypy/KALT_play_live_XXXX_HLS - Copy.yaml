@@ -1,4 +1,4 @@
-  - metric: %3%_KALT_XXXX_DASH
+  - metric: %3%_KALT_XXXX_HLS
     url: "$phoenixurl$/asset/action/getPlaybackContext"
     method: post
     headers:
@@ -10,12 +10,12 @@
         "assetType": "media",
         "contextDataParams": {
             "objectType": "KalturaPlaybackContextOptions",
-            "streamerType": "mpegdash",
+            "streamerType": "applehttp",
             "context": "PLAYBACK",
             "urlType": "DIRECT",
             "mediaProtocol": "https"
         },
-        "ks": YY-YY,
+        "ks": $ks$,
         "apiVersion": "5.4.0"
     }'
     status code test: 200

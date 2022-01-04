@@ -15,7 +15,7 @@
             "urlType": "DIRECT",
             "mediaProtocol": "https"
         },
-        "ks": $ks$,
+        "ks": YY-YY,
         "apiVersion": "5.4.0"
     }'
     status code test: 200
