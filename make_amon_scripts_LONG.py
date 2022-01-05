@@ -15,7 +15,7 @@ proto_dir = "C:\Temp\work\python\prototypy"
 scr_num = 100
 proto_dir_a = os.path.join(proto_dir, operator)
 longKS = "djJ8MzIwMHyHQFr96QF0fjOP3st3L7pd2jumTfn8QxxqsdaAB3QuA4D7_oH2ZB_YNMeL-G6aYYKhZlPhMxgV_KzBfDGJ24pCXbm1qqQAKnSU09y-xyrglo8JicvwByvzuWdnHhYfsaGd5Va8G6nOZ25rxII1-yEJ"
-
+#"username": "Amon_Cetin_3200", "email": "martin.novotny@cetin.cz", "password" : "X!2Y7($j@*xXk-3Vm=&nkPD^", "roleId": 4, "user_id": "5208047", "UDID": "5208047"
 # initializing rows list
 rows = []
 
@@ -85,9 +85,6 @@ with open(inputfile, 'r') as csvfile:
         logging.info("file --> " + os.path.join(path, "all.bat") + "  new sentence append")
 
         #copy file
-        #shutil.copy(os.path.join(proto_dir_a, "KALT_login_to_getKS_a.yaml"), os.path.join(dir_path, "KALT_login_to_getKS.yaml"))
-        #print("file --> " + os.path.join(dir_path, "KALT_login_to_getKS_a.yaml") + "  was copied")
-        #logging.info("file --> " + os.path.join(dir_path, "KALT_login_to_getKS_a.yaml") + "  was copied")
         shutil.copy(os.path.join(proto_dir_a, "defaults.include"), os.path.join(dir_path, "defaults.include"))
         print("file --> "  +os.path.join(dir_path, "defaults.include") + "  was copied")
         logging.info("file --> "  +os.path.join(dir_path, "defaults.include") + "  was copied")
@@ -106,7 +103,6 @@ with open(inputfile, 'r') as csvfile:
         print("file --> " + os.path.join(dir_path, "tests.list") + "  was copied")
         logging.info("file --> " + os.path.join(dir_path, "tests.list") + "  was copied")
 
-
         #open file, find string replace it KALT
         with open(kalt_f_name) as r:
             text = r.read().replace("XXXX", ("channel_"+chanel_nu+"_"+chanel_na))
@@ -121,7 +117,6 @@ with open(inputfile, 'r') as csvfile:
         print("file --> " + kalt_f_name + "  was edit")
         logging.info("file --> " + kalt_f_name + "  was edit")
 
-
         #open file, find string replace it BRPK
         with open(brpk_f_name) as r1:
             text1 = r1.read().replace("XXXX", ("channel_"+chanel_nu+"_"+chanel_na))
@@ -131,17 +126,12 @@ with open(inputfile, 'r') as csvfile:
         print("file --> " + brpk_f_name + "  was edit")
         logging.info("file --> " + brpk_f_name + "  was edit")
 
-
         # append to tests.list
-        #./KALT_login_to_getKS.yml 13 3 3200
-        #test_list_sentense1 = " "+operator_code+"\n"
-        #./KALT_play_live_1_RTS_1_DASH.yml 100 3 3200 800398
         scr_num = scr_num+1
         test_list_sentense2 = "\n./KALT_play_live_channel_"+chanel_na+"_HLS.yaml "+str(scr_num)+" 3 "+operator_code+" "+chanel_id+ "\n"
         #./BRPK_play_live_1_RTS_1_DASH.yml 101 3 3200
         scr_num = scr_num+1
         test_list_sentense3 = "./BRPK_play_live_channel_"+chanel_na+"_HLS.yaml "+str(scr_num)+" 3 "+operator_code+"\n"
-        
         
         f = open(os.path.join(dir_path, "tests.list"), "a")
         #f.write(test_list_sentense1)
@@ -150,7 +140,6 @@ with open(inputfile, 'r') as csvfile:
         f.close()
         print("file --> " + os.path.join(dir_path, "tests.list") + "  new sentence append")
         logging.info("file --> " + os.path.join(dir_path, "tests.list") + "  new sentence append")
-       
 
         #create channel directory (DASH)
         dir_name_dash = operator+"-channel_"+chanel_na+"_DASH"
@@ -167,9 +156,6 @@ with open(inputfile, 'r') as csvfile:
         logging.info("file --> " + os.path.join(path, "all.bat") + "  new sentence append")
 
         #copy file
-        #shutil.copy(os.path.join(proto_dir_a, "KALT_login_to_getKS_b.yaml"), os.path.join(dir_path, "KALT_login_to_getKS.yaml"))
-        #print("file --> " + os.path.join(dir_path, "KALT_login_to_getKS_b.yaml") + "  was copied")
-        #logging.info("file --> " + os.path.join(dir_path, "KALT_login_to_getKS_b.yaml") + "  was copied")
         shutil.copy(os.path.join(proto_dir_a, "defaults.include"), os.path.join(dir_path, "defaults.include"))
         print("file --> "  +os.path.join(dir_path, "defaults.include") + "  was copied")
         logging.info("file --> "  +os.path.join(dir_path, "defaults.include") + "  was copied")
@@ -212,9 +198,6 @@ with open(inputfile, 'r') as csvfile:
         logging.info("file --> " + kalt_f_name + "  was edit")
 
         # append to tests.list
-        #./KALT_login_to_getKS.yml 13 3 3200
-        #test_list_sentense1 = " "+operator_code+"\n"
-        #./KALT_play_live_1_RTS_1_DASH.yml 100 3 3200 800398
         scr_num = scr_num+1
         test_list_sentense2 = "\n./KALT_play_live_channel_"+chanel_na+"_DASH.yaml "+str(scr_num)+" 3 "+operator_code+" "+chanel_id+ "\n"
         #./BRPK_play_live_1_RTS_1_DASH.yml 101 3 3200

@@ -1,7 +1,7 @@
 import requests
 import hashlib
 
-partnerID = "3204" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 apiVersion = "5.3.5"
 
 
