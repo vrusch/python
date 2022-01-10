@@ -15,7 +15,9 @@ proto_dir = "C:\Temp\work\python\prototypy"
 scr_num = 100
 proto_dir_a = os.path.join(proto_dir, operator)
 longKS = "djJ8MzIwMHyHQFr96QF0fjOP3st3L7pd2jumTfn8QxxqsdaAB3QuA4D7_oH2ZB_YNMeL-G6aYYKhZlPhMxgV_KzBfDGJ24pCXbm1qqQAKnSU09y-xyrglo8JicvwByvzuWdnHhYfsaGd5Va8G6nOZ25rxII1-yEJ"
-#"username": "Amon_Cetin_3200", "email": "martin.novotny@cetin.cz", "password" : "X!2Y7($j@*xXk-3Vm=&nkPD^", "roleId": 4, "user_id": "5208047", "UDID": "5208047"
+#TLRS - "username": "Amon_Cetin_3200", "email": "martin.novotny@cetin.cz", "password" : "X!2Y7($j@*xXk-3Vm=&nkPD^", "roleId": 4, "user_id": "5208047", "UDID": "5208047"
+#O2CZ - "username": "Amon_Cetin_3201", "email": "jan.durdil@cetin.cz", "password" : "]D56@sQ^x0<!'TNH", "roleId": 4, "user_id": "5272426", "UDID": "5272426"
+# djJ8MzIwMXyiUtAWgP04EDo0vBQZRun0OtiQNKntdsqCMftmpHKbSHrifTOrWilUa_sQjIjU4aBDOM5f6-Op-Eof7V754zyxb2ABhqf9j-C0lmlrpU7hDO4wCxxhwON9PEP47T29JvicgiVOI81Ide-99_6y8ePz
 # initializing rows list
 rows = []
 
