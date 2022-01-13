@@ -6,24 +6,25 @@ import logging
 import datetime
 
 
-inputfile = "C:\Temp\work\python\opc_tlrs.csv"
-output_dir = "TLRS-channels"
+inputfile = "C:\Temp\work\python\opc_o2cz.csv"
+output_dir = "O2CZ-channels"
 parent_dir = "C:\Temp\work"
-operator = "TLRS"
-operator_code = "3200"
+operator = "O2CZ"
+operator_code = "3201"
 proto_dir = "C:\Temp\work\python\prototypy"
 scr_num = 100
 proto_dir_a = os.path.join(proto_dir, operator)
-longKS = "djJ8MzIwMHyHQFr96QF0fjOP3st3L7pd2jumTfn8QxxqsdaAB3QuA4D7_oH2ZB_YNMeL-G6aYYKhZlPhMxgV_KzBfDGJ24pCXbm1qqQAKnSU09y-xyrglo8JicvwByvzuWdnHhYfsaGd5Va8G6nOZ25rxII1-yEJ"
+longKS = "djJ8MzIwMXyiUtAWgP04EDo0vBQZRun0OtiQNKntdsqCMftmpHKbSHrifTOrWilUa_sQjIjU4aBDOM5f6-Op-Eof7V754zyxb2ABhqf9j-C0lmlrpU7hDO4wCxxhwON9PEP47T29JvicgiVOI81Ide-99_6y8ePz"
 #TLRS - "username": "Amon_Cetin_3200", "email": "martin.novotny@cetin.cz", "password" : "X!2Y7($j@*xXk-3Vm=&nkPD^", "roleId": 4, "user_id": "5208047", "UDID": "5208047"
 #O2CZ - "username": "Amon_Cetin_3201", "email": "jan.durdil@cetin.cz", "password" : "]D56@sQ^x0<!'TNH", "roleId": 4, "user_id": "5272426", "UDID": "5272426"
-# djJ8MzIwMXyiUtAWgP04EDo0vBQZRun0OtiQNKntdsqCMftmpHKbSHrifTOrWilUa_sQjIjU4aBDOM5f6-Op-Eof7V754zyxb2ABhqf9j-C0lmlrpU7hDO4wCxxhwON9PEP47T29JvicgiVOI81Ide-99_6y8ePz
+# O2CZ - djJ8MzIwMXyiUtAWgP04EDo0vBQZRun0OtiQNKntdsqCMftmpHKbSHrifTOrWilUa_sQjIjU4aBDOM5f6-Op-Eof7V754zyxb2ABhqf9j-C0lmlrpU7hDO4wCxxhwON9PEP47T29JvicgiVOI81Ide-99_6y8ePz
+# TLRS - djJ8MzIwMHyHQFr96QF0fjOP3st3L7pd2jumTfn8QxxqsdaAB3QuA4D7_oH2ZB_YNMeL-G6aYYKhZlPhMxgV_KzBfDGJ24pCXbm1qqQAKnSU09y-xyrglo8JicvwByvzuWdnHhYfsaGd5Va8G6nOZ25rxII1-yEJ
 # initializing rows list
 rows = []
 
 # create project directory
 ts = datetime.datetime.now().strftime("%Y.%m.%d_%H%M%S")
-output_dir = "TLRS-channels-" + ts
+output_dir = output_dir + ts
 path = os.path.join(parent_dir, output_dir)
 os.mkdir(path)
 

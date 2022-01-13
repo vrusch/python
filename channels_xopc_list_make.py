@@ -4,7 +4,7 @@ import logging
 import os
 
 
-partnerID = "3200" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
+partnerID = "3201" # partnerID = [("TLRS", "3200"), ("O2CZ", "3201"), ("TLHU", "3204"), ("O2SK", "3206")]
 phoenixURL = "https://" + partnerID + ".frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 
@@ -31,7 +31,8 @@ elif partnerID == "3201":
     log="./log/makeO2cz_channel_list.log"
     vyloucit_ch = ("Cetin", "blabla" , "RadioBonton", "DanceRadio", "ClassicFM", "Expresradio",
     "Radio1", "RadioBeat", "CountryRadio", "Frekvence1", "Evropa2", "RadioImpuls", "CRoJazz", "CRoRadiozurnalSport",
-    "CRoPlus", "CRoD-dur", "CRoJunior", "CRoRadioWave", "CRoVltava", "CRoDvojka", "CRoRadiozurnal")
+    "CRoPlus", "CRoD-dur", "CRoJunior", "CRoRadioWave", "CRoVltava", "CRoDvojka", "CRoRadiozurnal", "O2TVInfoHD", "NovaLadyHD", "PremierSport2HD", "NovaSport3HD", 
+    "NovaSport4HD", "EdgeSportHD", "Krb", "Akvarium")
 
 
 #send request function
@@ -133,6 +134,8 @@ if total_count > 0:
         channel_name = channel_name.replace("á", "a")
         channel_name = channel_name.replace("ž", "z")
         channel_name = channel_name.replace("|", "")
+        channel_name = channel_name.replace("/", "-")
+        channel_name = channel_name.replace("&", "-")
         channel_name = ''.join(channel_name.split())
         print(channel_name)
         logging.info("upravene jmeno: " +channel_name)
