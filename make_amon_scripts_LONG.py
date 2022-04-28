@@ -6,12 +6,14 @@ import logging
 import datetime
 
 
-inputfile = "C:\Temp\work\python\opc_o2cz.csv"
+#inputfile = "C:\work\python\opc_o2cz.csv"
+inputfile = "./opc_o2cz.csv"
 output_dir = "O2CZ-channels"
-parent_dir = "C:\Temp\work"
+parent_dir = "C:\work"
 operator = "O2CZ"
 operator_code = "3201"
-proto_dir = "C:\Temp\work\python\prototypy"
+#proto_dir = "C:\work\python\prototypy"
+proto_dir = "./prototypy"
 scr_num = 100
 proto_dir_a = os.path.join(proto_dir, operator)
 longKS = "djJ8MzIwMXyiUtAWgP04EDo0vBQZRun0OtiQNKntdsqCMftmpHKbSHrifTOrWilUa_sQjIjU4aBDOM5f6-Op-Eof7V754zyxb2ABhqf9j-C0lmlrpU7hDO4wCxxhwON9PEP47T29JvicgiVOI81Ide-99_6y8ePz"
