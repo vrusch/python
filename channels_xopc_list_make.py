@@ -30,9 +30,9 @@ elif partnerID == "3201":
     outputcsv = "opc_o2cz.csv"
     log="./log/makeO2cz_channel_list.log"
     vyloucit_ch = ("Cetin", "blabla" , "RadioBonton", "DanceRadio", "ClassicFM", "Expresradio",
-    "Radio1", "RadioBeat", "CountryRadio", "Frekvence1", "Evropa2", "RadioImpuls", "CRoJazz", "CRoRadiozurnalSport",
-    "CRoPlus", "CRoD-dur", "CRoJunior", "CRoRadioWave", "CRoVltava", "CRoDvojka", "CRoRadiozurnal", "O2TVInfoHD", "NovaLadyHD", "PremierSport2HD", "NovaSport3HD", 
-    "NovaSport4HD", "EdgeSportHD", "Krb", "Akvarium")
+    "Radio1", "RadioBeat", "CountryRadio", "Frekvence1", "Evropa2", "RadioImpuls", "CRoJazz", "CRoRadiozurnalSport", "Proglas",
+    "CRoPlus", "CRoD-dur", "CRoJunior", "CRoRadioWave", "CRoVltava", "CRoDvojka", "CRoRadiozurnal", "Krb", "Akvarium")
+    #"O2TVInfoHD", "NovaLadyHD", "PremierSport2HD", "NovaSport3HD", "NovaSport4HD", "EdgeSportHD"
 
 
 #send request function
