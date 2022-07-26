@@ -80,13 +80,13 @@ logging.info("LOGIN KS: " +login_ks)
 servis = "/asset/action/list"
 data = {
         "clientTag": "KUX",
-        "language": "srp",
+        "language": "eng",
         "apiVersion": apiVersion,
         "ks": login_ks,
         "filter": {
             "objectType": "KalturaChannelFilter",
-            "kSql": "(and (and asset_type="+str(assettype)+"))",
-            "idEqual": idEqual
+            "kSql": "(and (and asset_type="+str(assettype)+"))", #O2CZ 607;TLRS 601
+            "idEqual": idEqual #O2CZ 354336;TLRS 354085
             },
         "pager": {
         "objectType": "KalturaFilterPager",

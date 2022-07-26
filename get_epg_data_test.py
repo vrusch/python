@@ -15,15 +15,16 @@ logger.addHandler(logHandler)
 
 
 
-partnerID = "3200" 
+partnerID = "3201" 
 phoenixURL = "https://3200.frp1.ott.kaltura.com/api_v3/service/"
 apiVersion = "5.4.0"
 clientTag = "0.13.0-PC"
 language = "eng"
-udid = "monitoring3_rs" 
-username = "monitoring3_rs" 
-password = "#-K_monitoring3_rs" 
-header = {'Content-Type' : 'application/json', 'Host ' : '3200.frp1.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
+udid = "monitoring2_cz" 
+username = "monitoring2_cz@cetin.cz" 
+password = "#-K_monitoring2_cz" 
+header = {'Content-Type' : 'application/json', 'Host ' : '3201.frp.ott.kaltura.com', 'Accept' : '*/*', 'Accept-Encoding' : 'gzip, deflate, br', 'Connection' : 'keep-alive'} 
+inputfile = "opc_o2cz.csv"
 
 def http_log(response):
     #logger.debug(http.client.responses)
@@ -56,7 +57,7 @@ json_response = response.json()
 login_ks = json_response['result']['loginSession']['ks']
 logger.info("User KS: "+ login_ks)
 
-inputfile = "opc_tlrs.csv"
+inputfile = "opc_o2cz.csv"
 assetId = ""
 channelName = ""
 channelNumber = ""
